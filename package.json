@@ -1,0 +1,26 @@
+{
+  "name": "wensday-library-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeakMengs/Wensday-Library-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SeakMengs/Wensday-Library-API/issues"
+  },
+  "homepage": "https://github.com/SeakMengs/Wensday-Library-API#readme",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "mysql2": "^3.3.5"
+  }
+}
