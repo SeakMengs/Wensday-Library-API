@@ -7,17 +7,21 @@ npm i express mysql2 dotenv
 ```
 
 # Run Project
+install node modules (for the first time when running this project only)
 ```
-npm i //install modules (for the first time when running this project only)
-npm start //start local development
+npm i 
+```
+start local development
+```
+npm start
 ```
 
 # Folder Structure
-```configs``` is for mysql connection detail
-```controllers``` is for query function
-```routes``` is for creating routes
-```services``` is for mysql connection
-```server.js``` is the main file of this project
+```configs``` for mysql connection detail <br>
+```controllers``` for query function <br>
+```routes``` for creating routes <br>
+```services``` for mysql connection <br>
+```server.js``` the main file of this project <br>
 
 # Resources
 https://www.bezkoder.com/node-js-rest-api-express-mysql/
