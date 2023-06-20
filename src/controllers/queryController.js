@@ -1,17 +1,50 @@
-import connection from "../services/database.js";
+/*
+ * Reference: 
+ * https://sequelize.org/docs/v6/core-concepts/model-querying-finders/
+ * https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/
+ */
 
-export const getOneTaskById = ((req, res) => {
-    const taskId = req.params.id;
-    const query = `SELECT * FROM task WHERE id = ${taskId}`;
+import CompanyUser from "../models/CompanyUser.js";
+import Company from "../models/Company.js";
+import Feedback from "../models/Feedback.js";
 
-    connection.query(query, (err, result) => {
-        if (err) throw err;
+export const getOneUserById = async (req, res) => {
+    const user_id = req.params.id;
 
-        if (result.length === 0) {
-            res.status(404).json({ message: "Task not found!" });
-            return;
-        }
+    try {
+        const user = await CompanyUser.findOne({
+            where: { id: user_id },
+        });
 
-        res.json(result[0]);
-    });
-});
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getAllCompaniesByUserId = async (req, res) => {
+    const user_id = req.params.id;
+
+    try {
+        const user = await CompanyUser.findOne({
+            where: { id: user_id },
+            // join company table and feedback table join with company table
+            include: [
+                {
+                    model: Company,
+                    as: 'companies',
+                    include: [
+                        {
+                            model: Feedback,
+                            as: 'feedbacks',
+                        }
+                    ]
+                }
+            ],
+        })
+
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}

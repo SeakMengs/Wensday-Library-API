@@ -3,7 +3,7 @@
 # Initialize
 ```
 npm init -y
-npm i express mysql2 dotenv
+npm i express mysql2 dotenv sequelize
 ```
 
 # Run Project
@@ -25,3 +25,6 @@ npm start
 
 # Resources
 https://www.bezkoder.com/node-js-rest-api-express-mysql/
+
+Sequelize Documents: <br>
+https://sequelize.org/docs/v6/getting-started/
