@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import router from "./routes/route.js";
-import sequelize from "./services/sequelize.js";
 import mysqlConfig from "./configs/mysql.js";
+import sequelize from "./services/sequelize.js";
 
 // Load environment variables from .env file
 dotenv.config()
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.use(router);
 
 try {
-    console.log('Database Config:', mysqlConfig)
+    console.log('\nDatabase Config:', mysqlConfig)
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
 } catch (error) {

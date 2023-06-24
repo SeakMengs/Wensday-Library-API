@@ -4,7 +4,6 @@
  */
 import sequelize from "../services/sequelize.js";
 import { DataTypes } from "sequelize";
-import Feedback from "./Feedback.js";
 
 const modelName = "company";
 const attributes = {
@@ -28,20 +27,20 @@ const attributes = {
             model: 'companyuser',
             key: 'id'
         },
+    },
+    create_at: {
+        type: DataTypes.DATE,
     }
 }
 const options = {
     tableName: "company",
     // If timestamps are true, Sequelize will create createdAt and updatedAt columns for your database table.
-    timestamps: false,
+    // timestamps: false,
+    createdAt: 'create_at',
+    updatedAt: false,
 }
 
 //* NOTE: sequelize.define(modelName, attributes, options)
 const Company = sequelize.define(modelName, attributes, options);
 
-Company.hasMany(Feedback, {
-    foreignKey: 'company_id',
-    as: 'feedbacks'
-});
-
-export default Company;
+export default Company

@@ -3,7 +3,7 @@
 # Initialize
 ```
 npm init -y
-npm i express mysql2 dotenv sequelize
+npm i express mysql2 dotenv sequelize nodemon
 ```
 
 # Run Project

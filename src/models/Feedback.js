@@ -5,7 +5,7 @@
 import sequelize from "../services/sequelize.js";
 import { DataTypes } from "sequelize";
 
-const modelName = "company";
+const modelName = "feedback";
 const attributes = {
     id: {
         type: DataTypes.INTEGER,

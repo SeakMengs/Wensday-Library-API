@@ -4,26 +4,24 @@
  * https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/
  */
 
-import CompanyUser from "../models/CompanyUser.js";
-import Company from "../models/Company.js";
-import Feedback from "../models/Feedback.js";
+import { CompanyUser, Company, Feedback, Service } from "../models/Relationship.js";
 
 export const getOneUserById = async (req, res) => {
-    const user_id = req.params.id;
+    const { id: user_id } = req.params;
 
     try {
         const user = await CompanyUser.findOne({
             where: { id: user_id },
         });
 
-        res.status(200).json(user)
+        res.status(200).json()
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
 
 export const getAllCompaniesByUserId = async (req, res) => {
-    const user_id = req.params.id;
+    const { id: user_id } = req.params;
 
     try {
         const user = await CompanyUser.findOne({
@@ -37,9 +35,13 @@ export const getAllCompaniesByUserId = async (req, res) => {
                         {
                             model: Feedback,
                             as: 'feedbacks',
+                        },
+                        {
+                            model: Service,
+                            as: 'services',
                         }
                     ]
-                }
+                },
             ],
         })
 
