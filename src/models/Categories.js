@@ -1,12 +1,11 @@
 import sequelize from "../services/sequelize.js";
 import { DataTypes } from "sequelize";
-import Users from "./Users.js"
 
-const model = 'Categories';
+const modelName = 'categories';
 const attributes = {
     category_id: {
         type: DataTypes.BIGINT,
-        primarykey: true,
+        primaryKey: true,
         autoIncrement: true, 
     },
     name: {
@@ -22,15 +21,20 @@ const attributes = {
     },
     created_at: {
         type: DataTypes.DATE,
-    }
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+    },
 };
 
 const options = {
-    tableName: "Categories",
+    tableName: "categories",
     // If timestamps are true, Sequelize will create createdAt and updatedAt columns for your database table.
     // timestamps: false,
-    createdAt: 'create_at',
-    updatedAt: false,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 }
 
 const Categories = sequelize.define(modelName, attributes, options);
+
+export default Categories;

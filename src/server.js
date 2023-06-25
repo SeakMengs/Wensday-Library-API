@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import router from "./routes/route.js";
 import mysqlConfig from "./configs/mysql.js";
 import sequelize from "./services/sequelize.js";
+import cors from "cors";
 
 // Load environment variables from .env file
 dotenv.config()
@@ -10,6 +11,7 @@ dotenv.config()
 const app = express();
 const port = process.env.SERVER_PORT || 8080;
 
+app.use(cors())
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded

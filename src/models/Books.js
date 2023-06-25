@@ -1,7 +1,7 @@
 import sequelize from "../services/sequelize.js";
 import { DataTypes } from "sequelize";
 
-const model = 'Books';
+const modelName = 'books';
 const attributes = {
     book_id: {
         type: DataTypes.BIGINT,
@@ -39,42 +39,51 @@ const attributes = {
     category_id: {
         type: DataTypes.BIGINT,
         reference: {
-            model: 'Categories',
+            model: 'categories',
             id: 'categories_id'
-        }
+        },
+        allowNull: false,
     },
     add_by_admin_id: {
         type: DataTypes.BIGINT,
         reference: {
-            model: 'Admins',
+            model: 'admins',
             id: 'admin_id'
-        }
+        },
+        allowNull: false,
     },
     active_borrow_id: {
         type: DataTypes.BIGINT,
         reference: {
             model: 'active_borrows',
             id: 'active_borrow_id'
-        }
+        },
+        allowNull: false,
     },
     publication_id: {
         type: DataTypes.BIGINT,
         reference: {
             model: 'publication',
             id: 'publication_id'
-        }
+        },
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,
-    }
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+    },
 }
 
 const options = {
     tableName: "Books",
     // If timestamps are true, Sequelize will create createdAt and updatedAt columns for your database table.
     // timestamps: false,
-    createdAt: 'create_at',
-    updatedAt: false,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 }
 
 const Books = sequelize.define(modelName, attributes, options);
+
+export default Books;

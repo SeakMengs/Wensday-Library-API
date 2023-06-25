@@ -1,11 +1,11 @@
 import sequelize from "../services/sequelize.js";
 import { DataTypes } from "sequelize";
 
-const model = 'user_borrow_history';
+const modelName = 'user_borrow_history';
 const attributes = {
     user_borrow_history_id: {
         type: DataTypes.BIGINT,
-        primatyKey: true,
+        primaryKey: true,
         autoIncrement: true,
     },
     user_id: {
@@ -14,13 +14,15 @@ const attributes = {
             model: 'Users',
             key: 'user_id'
         },
+        allowNull: false,
     },
     book_id: {
         type: DataTypes.BIGINT,
         reference: {
             model: 'Books',
             key: 'book_id'
-        }
+        },
+        allowNull: false,
     },
     borrow_date: {
         type: DataTypes.DATE,
@@ -40,15 +42,20 @@ const attributes = {
     },
     created_at: {
         type: DataTypes.DATE,
-    }
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+    },
 }   
 
 const options = {
     tableName: "user_borrow_history",
     // If timestamps are true, Sequelize will create createdAt and updatedAt columns for your database table.
     // timestamps: false,
-    createdAt: 'create_at',
-    updatedAt: false,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 }
 
 const UserBorrowHistory = sequelize.define(modelName, attributes, options);
+
+export default UserBorrowHistory;

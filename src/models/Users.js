@@ -1,7 +1,7 @@
 import sequelize from "../services/sequelize.js";
 import { DataTypes } from "sequelize";
 
-const modelName = 'Users';
+const modelName = 'users';
 const attributes = {
     user_id: {
         type: DataTypes.BIGINT,
@@ -11,6 +11,7 @@ const attributes = {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     password: {
         type: DataTypes.STRING,
@@ -26,31 +27,37 @@ const attributes = {
     },
     title: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     gender: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     contact_number: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
-    created_at:{
-        type: DataTypes.DATE, 
-    }
+    created_at: {
+        type: DataTypes.DATE,
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+    },
 }
 
 const options = {
-    tableName: "Users",
+    tableName: "users",
     // If timestamps are true, Sequelize will create createdAt and updatedAt columns for your database table.
     // timestamps: false,
-    createdAt: 'create_at',
-    updatedAt: false,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    // defaultScope: {
+    //     attributes: { exclude: ['password'] },
+    // },
 }
 
 const Users = sequelize.define(modelName, attributes, options);
+
+export default Users;

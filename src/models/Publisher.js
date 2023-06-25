@@ -1,7 +1,7 @@
 import sequelize from "../services/sequelize.js";
-import { DataTypes, DatabaseError } from "sequelize";
+import { DataTypes } from "sequelize";
 
-const model = 'publisher';
+const modelName = 'publisher';
 const attributes = {
     publisher_id : {
         type: DataTypes.BIGINT,
@@ -14,7 +14,6 @@ const attributes = {
     },
     city: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     publication_id : {
         type: DataTypes.BIGINT,
@@ -25,15 +24,20 @@ const attributes = {
     },
     created_at: {
         type: DataTypes.DATE,
-    }
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+    },
 }
 
 const options = {
     tableName: "publisher",
     // If timestamps are true, Sequelize will create createdAt and updatedAt columns for your database table.
     // timestamps: false,
-    createdAt: 'create_at',
-    updatedAt: false,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 }
 
 const Publisher = sequelize.define(modelName, attributes, options);
+
+export default Publisher;

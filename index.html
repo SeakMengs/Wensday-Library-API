@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="test">hi</h1>
+
+    <button onclick="testFetch()">fetch</button>
+</body>
+
+</html>
+
+<script>
+    console.log('hi')
+    // async function testFetch() {
+    //     console.log('test')
+    //     const res = await fetch('http://localhost:3000/')
+
+    //     if (res.status == 200) {
+    //         const data = await res.json()
+
+    //         console.log(data)
+    //     }
+    // }
+    async function testFetch() {
+        console.log('test')
+        const res = await fetch('http://localhost:3000/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: "test@gmail.com",
+                password: "1234566"
+            })
+        })
+
+        const data = await res.json()
+
+        if (res.status == 200) {
+
+            console.log(data)
+        } else {
+            console.log(data)
+        }
+    }
+</script>
