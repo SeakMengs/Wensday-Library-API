@@ -15,6 +15,121 @@ export const getAllCategory = async (req, res) => {
     }
 }
 
+export const getAllBook = async (req, res) => {
+    try {
+        const books = await Books.findAll({
+            include: [
+                {
+                    model: Publication,
+                    as : 'publication',
+                    include: [
+                        {
+                            model: Publisher,
+                            as : 'publishers',
+                        }
+                    ]
+                },
+                {
+                    model: Categories,
+                    as: 'categories',
+                },
+                {
+                    model: Admins,
+                    as: 'admin',
+                },
+                {
+                    model: ActiveBorrow,
+                    as: 'active_borrow',
+                    include: [
+                        {
+                            model: Users,
+                            as: 'user',
+                        }
+                    ]
+                },
+                {
+                    model: Author,
+                    as: 'authors',
+                }
+            ]
+        });
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: error.message});
+    }
+}
+
+export const getAllBookById = async (req, res) => {
+    const { id : book_id } = req.params;
+    try {
+        const books = await Books.findOne({
+            where: {book_id : book_id},
+            include: [
+                {
+                    model: Publication,
+                    as : 'publication',
+                    include: [
+                        {
+                            model: Publisher,
+                            as : 'publishers',
+                        }
+                    ]
+                },
+                {
+                    model: Categories,
+                    as: 'categories',
+                },
+                {
+                    model: Admins,
+                    as: 'admin',
+                },
+                {
+                    model: ActiveBorrow,
+                    as: 'active_borrow',
+                    include: [
+                        {
+                            model: Users,
+                            as: 'user',
+                        }
+                    ]
+                },
+                {
+                    model: Author,
+                    as: 'authors',
+                }
+            ]
+        });
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: error.message});
+    }
+}
+
+export const getAllUserById = async (req, res) => {
+    const { id : user_id } = req.params;
+    try{
+        const users = await Users.findOne({
+            where: { user_id : user_id},
+            include: [
+                {
+                    model: BalanceHistories,
+                    as: 'balance_histories',
+                },
+                {
+                    model: ActiveBorrow,
+                    as: 'active_borrows',
+                },
+                {
+                    model: UserBorrowHistory,
+                    as: 'user_borrow_histories',
+                }
+            ]
+        });
+        res.status(200).json(users);
+    }catch(error){
+        res.status(500).json({ message: error.message});
+    }
+}
 export const userLogin = async (req, res) => {
     try {
         const { email, password } = req.body
@@ -32,6 +147,15 @@ export const userLogin = async (req, res) => {
             res.status(401).json({ message: "Login Failed" })
         }
 
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getAllActiveBorrow = async (req, res) => {
+    try {
+        const activeBorrow = await ActiveBorrow.findAll();
+        res.status(200).json(activeBorrow)
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllCategory, userLogin } from "../controllers/queryController.js";
+import { getAllCategory, userLogin, getAllBook, getAllBookById, getAllUserById, getAllActiveBorrow } from "../controllers/queryController.js";
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/hello', (req, res) => {
 router.post('/user/login', userLogin);
 
 // query by username
-router.post('/admin/login');
+router.post('/admin/login'); 
 
 // TODO: Query Here Bro
 
@@ -25,19 +25,19 @@ router.get('/category/all', getAllCategory);
 // 3. hasOne admin
 // 4. hasOne active_borrows. active_borrows hasOne user
 // 5. hasMany authors
-router.get('/book/all');
+router.get('/book/all', getAllBook);
 
 // same as above but get only one book by id
-router.get('/book/:id');
+router.get('/book/:id', getAllBookById);
 
 // get user by id join with
 // 1. balance_histories
 // 2. active_borrows
 // 3. borrow_histories (all hasMany)
-router.get('/user/:id');
+router.get('/user/:id', getAllUserById);
 
 // get all active borrows
-router.get('/active-borrows');
+router.get('/active-borrows', getAllActiveBorrow);
 
 //*--------------------------------------- End of Query
 

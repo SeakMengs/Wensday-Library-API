@@ -11,7 +11,7 @@ const attributes = {
     user_id: {
         type: DataTypes.BIGINT,
         reference: {
-            model: 'Users',
+            model: 'users',
             key: 'user_id'
         },
         allowNull: false,
@@ -19,7 +19,7 @@ const attributes = {
     book_id: {
         type: DataTypes.BIGINT,
         reference: {
-            model: 'Books',
+            model: 'books',
             key: 'book_id'
         },
         allowNull: false,
