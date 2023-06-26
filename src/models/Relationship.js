@@ -11,12 +11,7 @@ import Users from './Users.js';
 
 // TODO: Relationship Here
 
-// example
-// CompanyUser.hasMany(Company, {
-    // foreignKey: 'companyuser_id',
-    // as: 'companies'
-// });
-Books.hasMany(Publication,{
+Books.belongsTo(Publication,{
     foreignKey: 'publication_id',
     as: 'publication'
 });
@@ -26,13 +21,13 @@ Publication.hasMany(Publisher, {
     as : 'publishers'
 });
 
-Books.hasMany(Categories, {
+Books.belongsTo(Categories, {
     foreignKey: 'category_id',
     as : 'categories'
 });
 
-Books.hasOne(Admins,{
-    foreignKey: 'admin_id',
+Books.belongsTo(Admins,{
+    foreignKey: 'add_by_admin_id',
     as : 'admin'
 });
 
@@ -41,7 +36,7 @@ Books.hasMany(ActiveBorrow, {
     as : 'active_borrow'
 });
 
-ActiveBorrow.hasOne(Users,{
+ActiveBorrow.belongsTo(Users,{
     foreignKey: 'user_id',
     as : 'user'
 });
@@ -64,6 +59,26 @@ Users.hasMany(ActiveBorrow, {
 Users.hasMany(UserBorrowHistory, {
     foreignKey: 'user_borrow_history_id',
     as: 'user_borrow_histories'
+});
+
+Categories.belongsTo(Admins, {
+    foreignKey: 'add_by_admin_id',
+    as: 'admin'
+});
+
+ActiveBorrow.belongsTo(Books, {
+    foreignKey: 'book_id',
+    as: 'book'
+});
+
+BalanceHistories.belongsTo(Admins, {
+    foreignKey: 'paid_to_admin_id',
+    as: 'admin'
+});
+
+UserBorrowHistory.belongsTo(Books, {
+    foreignKey: 'book_id',
+    as: 'book'
 });
 
 //* End of Relationship

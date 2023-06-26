@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllCategory, userLogin, getAllBook, getAllBookById, getAllUserById, getAllActiveBorrow } from "../controllers/queryController.js";
+import { getAllCategory, userLogin, getAllBook, getAllBookById, getOneUserById, getAllActiveBorrow, adminLogin, userSignup } from "../controllers/queryController.js";
 
 const router = express.Router();
 
@@ -10,9 +10,10 @@ router.get('/hello', (req, res) => {
 // check req.body compare email and password
 // return status 200 if success, 401 if failed
 router.post('/user/login', userLogin);
+router.post('/user/signup', userSignup); 
 
 // query by username
-router.post('/admin/login'); 
+router.post('/admin/login', adminLogin); 
 
 // TODO: Query Here Bro
 
@@ -34,7 +35,7 @@ router.get('/book/:id', getAllBookById);
 // 1. balance_histories
 // 2. active_borrows
 // 3. borrow_histories (all hasMany)
-router.get('/user/:id', getAllUserById);
+router.get('/user/:id', getOneUserById);
 
 // get all active borrows
 router.get('/active-borrows', getAllActiveBorrow);

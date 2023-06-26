@@ -11,7 +11,6 @@ const attributes = {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     password: {
         type: DataTypes.STRING,
@@ -24,6 +23,7 @@ const attributes = {
     balance: {
         type: DataTypes.BIGINT,
         allowNull: false,
+        defaultValue: 0
     },
     title: {
         type: DataTypes.STRING,
@@ -34,7 +34,6 @@ const attributes = {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     contact_number: {
         type: DataTypes.STRING,
