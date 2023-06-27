@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllCategory, userLogin, getAllBook, getAllBookById, getOneUserById, getAllActiveBorrow, adminLogin, userSignup } from "../controllers/queryController.js";
+import { getAllCategory, userLogin, getAllBook, getAllBookById, getOneUserById, getAllActiveBorrow, adminLogin, userSignup, createCategory, createAuthor, getOneAdminById, updateBalance } from "../controllers/queryController.js";
 
 const router = express.Router();
 
@@ -14,6 +14,10 @@ router.post('/user/signup', userSignup);
 
 // query by username
 router.post('/admin/login', adminLogin); 
+
+router.post('/createCategory', createCategory);
+router.post('/createAuthor', createAuthor);
+router.post('/updateBalance', updateBalance);
 
 // TODO: Query Here Bro
 
@@ -36,9 +40,10 @@ router.get('/book/:id', getAllBookById);
 // 2. active_borrows
 // 3. borrow_histories (all hasMany)
 router.get('/user/:id', getOneUserById);
+router.get('/admin/:id', getOneAdminById);
 
 // get all active borrows
-router.get('/active-borrows', getAllActiveBorrow);
+router.get('/activeBorrows', getAllActiveBorrow);
 
 //*--------------------------------------- End of Query
 

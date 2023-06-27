@@ -68,6 +68,14 @@ const attributes = {
         },
         allowNull: false,
     },
+    author_id: {
+        type: DataTypes.BIGINT,
+        reference: {
+            model: 'author',
+            id: 'author_id'
+        },
+        allowNull: false,
+    },
     created_at: {
         type: DataTypes.DATE,
     },

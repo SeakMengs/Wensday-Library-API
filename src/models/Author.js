@@ -12,12 +12,13 @@ const attributes = {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    book_id: {
+    admin_id: {
         type: DataTypes.BIGINT,
         reference: {
-            model: 'books',
-            key: 'book_id'
-        }
+            model: 'admins',
+            id: 'admin_id'
+        },
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,
