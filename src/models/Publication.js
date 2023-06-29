@@ -8,7 +8,7 @@ const attributes = {
         primaryKey: true,
         autoIncrement: true,
     },
-    year: {
+    publish_year: {
         type: DataTypes.BIGINT,
         allowNull: false,
     },
@@ -26,6 +26,14 @@ const attributes = {
     },
     number_of_pages: {
         type: DataTypes.TINYINT,
+    },
+    publisher_id: {
+        type: DataTypes.BIGINT,
+        references: {
+            model: 'publisher',
+            key: 'publisher_id',
+        },
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,

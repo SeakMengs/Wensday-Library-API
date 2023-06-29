@@ -38,6 +38,9 @@ const attributes = {
     contact_number: {
         type: DataTypes.STRING,
     },
+    debt: {
+        type: DataTypes.BIGINT,
+    },
     created_at: {
         type: DataTypes.DATE,
     },

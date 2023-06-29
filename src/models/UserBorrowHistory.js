@@ -40,6 +40,9 @@ const attributes = {
         type: DataTypes.BIGINT,
         allowNull: false,
     },
+    return_late_by_day: {
+        type: DataTypes.BIGINT,
+    },
     created_at: {
         type: DataTypes.DATE,
     },

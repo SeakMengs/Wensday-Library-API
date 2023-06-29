@@ -6,6 +6,7 @@
 
 import { ActiveBorrow, Admins, Author, BalanceHistories, Books, Categories, Publication, Publisher, UserBorrowHistory, Users } from "../models/Relationship.js";
 import { Sequelize } from "sequelize";
+import sequelize from "../services/sequelize.js";
 
 export const getAllCategory = async (req, res) => {
     try {
@@ -26,6 +27,7 @@ export const getAllCategory = async (req, res) => {
 export const getAllBook = async (req, res) => {
     try {
         const books = await Books.findAll({
+            order: [['created_at', 'DESC']],
             include: [
                 {
                     model: Publication,
@@ -33,7 +35,7 @@ export const getAllBook = async (req, res) => {
                     include: [
                         {
                             model: Publisher,
-                            as: 'publishers',
+                            as: 'publisher',
                         }
                     ]
                 },
@@ -53,6 +55,7 @@ export const getAllBook = async (req, res) => {
                         {
                             model: Users,
                             as: 'user',
+                            attributes: ['username']
                         }
                     ]
                 },
@@ -80,7 +83,7 @@ export const getAllBookById = async (req, res) => {
                     include: [
                         {
                             model: Publisher,
-                            as: 'publishers',
+                            as: 'publisher',
                         }
                     ]
                 },
@@ -136,6 +139,11 @@ export const getOneUserById = async (req, res) => {
     try {
         const user = await Users.findOne({
             where: { user_id: user_id },
+            order: [
+                ['balance_histories', 'created_at', 'DESC'],
+                ['user_borrow_histories', 'created_at', 'DESC'],
+                ['active_borrows', 'created_at', 'DESC']
+            ],
             include: [
                 {
                     model: BalanceHistories,
@@ -167,6 +175,7 @@ export const getOneUserById = async (req, res) => {
                             as: 'book',
                         }
                     ],
+                    order: [['created_at', 'DESC']],
                 }
             ],
         });
@@ -358,6 +367,35 @@ export const createAuthor = async (req, res) => {
     }
 }
 
+export const createPublisher = async (req, res) => {
+    try {
+        const existPublisher = await Publisher.findOne({
+            where: { name: req.body.name }
+        })
+
+        if (existPublisher) {
+            res.status(401).json({ message: "Publisher already exist" })
+            return
+        }
+
+        const publisher = await Publisher.create({
+            name: req.body.name,
+            admin_id: req.body.admin_id,
+            address: req.body.city,
+        })
+
+        if (publisher) {
+            res.status(200).json({
+                message: "Create Publisher Success",
+                publisher: publisher
+            })
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 export const getAllActiveBorrow = async (req, res) => {
     try {
         const active_borrows = await ActiveBorrow.findAll({
@@ -389,10 +427,30 @@ export const updateBalance = async (req, res) => {
     try {
         const { user_id, amount, admin_id } = req.body
 
+        const balance = await Users.findOne({
+            where: { user_id: user_id }
+        })
+
+        if (balance.balance + amount < 0) {
+            res.status(401).json({ message: "Not enough balance" })
+            return
+        }
+        if (balance.debt + amount < 0) {
+            res.status(401).json({ message: "The amount of deduction is beyond current user's debt" })
+            return
+        }
+
+        let updateLogic = {
+            balance: Sequelize.literal(`balance + ${amount}`),
+        }
+
+        if (amount < 0) {
+            // we also + debt with amount   
+            updateLogic.debt = Sequelize.literal(`debt + ${amount}`)
+        }
+
         const user = await Users.update(
-            {
-                balance: Sequelize.literal(`balance + ${amount}`),
-            },
+            updateLogic,
             {
                 where: { user_id: user_id }
             }
@@ -423,7 +481,153 @@ export const updateBalance = async (req, res) => {
 
 export const returnBook = async (req, res) => {
     try {
-        
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getAllAuthor = async (req, res) => {
+    try {
+        const authors = await Author.findAll();
+
+        if (authors) {
+            res.status(200).json({
+                authors: authors
+            })
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getAllPublisher = async (req, res) => {
+    try {
+        const publishers = await Publisher.findAll();
+
+        if (publishers) {
+            res.status(200).json({
+                publishers: publishers
+            })
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const addBook = async (req, res) => {
+    //Docs: https://sequelize.org/docs/v6/other-topics/transactions/
+    // First, we start a transaction from your connection and save it into a variable
+    const t = await sequelize.transaction();
+    try {
+
+        const { book, publication } = req.body
+
+        const existBook = await Books.findOne({
+            where: { title: book.title }
+        })
+
+        if (existBook) {
+            res.status(401).json({ message: "Book already exist" })
+            return
+        }
+
+        const savePublication = await Publication.create({
+            publish_year: publication.publish_year,
+            series_title: publication.series_title,
+            volume: publication.volume,
+            edition: publication.edition,
+            number_of_volumes: publication.number_of_volumes,
+            number_of_pages: publication.number_of_pages,
+            publisher_id: publication.publisher_id,
+        }, { transaction: t });
+
+        const saveBook = await Books.create({
+            title: book.title,
+            description: book.description,
+            cover_image: book.cover_image,
+            language: book.language,
+            has_active_borrow_requests: false,
+            user_borrow_count: 0,
+            category_id: book.category_id,
+            author_id: book.author_id,
+            add_by_admin_id: book.add_by_admin_id,
+            publication_id: savePublication.publication_id
+        }, { transaction: t });
+
+        // If the execution reaches this line, no errors were thrown.
+        // We commit the transaction.
+        // throw new Error('Rollback test');
+
+        await t.commit();
+        if (saveBook) {
+            res.status(200).json({
+                message: "Create Book Success",
+                book: saveBook
+            })
+        }
+
+    } catch (error) {
+        // If the execution reaches this line, an error was thrown.
+        // We rollback the transaction.
+        await t.rollback();
+
+        console.log("rollback")
+
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const updateReturnBook = async (req, res) => {
+    try {
+        const { active_borrow_id } = req.params;
+
+        const returnBook = await sequelize.query(`CALL insert_user_borrow_history(:activeBorrowId)`, {
+            // replacements: { activeBorrowId: active_borrow_id }
+            replacements: { activeBorrowId: active_borrow_id }
+        })
+
+
+        res.status(200).json({
+            message: "Return Book Success",
+            returnBook: returnBook
+        })
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const borrowBook = async (req, res) => {
+    try {
+        const { book_id, user_id } = req.body
+
+        console.log(book_id, user_id)
+
+        if (!book_id || !user_id) {
+            res.status(401).json({ message: "Book id or user id is empty" })
+            return
+        }
+
+        const active_borrow = await ActiveBorrow.create({
+            book_id: book_id,
+            user_id: user_id,
+            borrow_date: new Date(),
+            // one week from now
+            // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+            date_to_be_return: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+        })
+
+        if (active_borrow) {
+            const updateBookAvailablity = await Books.update(
+                { has_active_borrow_requests: true },
+                { where: { book_id: book_id } }
+            );
+
+            res.status(200).json({
+                message: "Borrow Book Success",
+                active_borrow: active_borrow
+            })
+        }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

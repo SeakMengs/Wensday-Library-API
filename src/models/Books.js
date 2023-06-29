@@ -32,10 +32,6 @@ const attributes = {
         type: DataTypes.BIGINT,
         allowNull: false,
     },
-    publish_year: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-    },
     category_id: {
         type: DataTypes.BIGINT,
         reference: {
@@ -58,7 +54,6 @@ const attributes = {
             model: 'active_borrows',
             id: 'active_borrow_id'
         },
-        allowNull: false,
     },
     publication_id: {
         type: DataTypes.BIGINT,

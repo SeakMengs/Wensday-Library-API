@@ -16,14 +16,19 @@ Books.belongsTo(Publication, {
     as: 'publication'
 });
 
-Publication.hasMany(Publisher, {
-    foreignKey: 'publication_id',
-    as: 'publishers'
+Publication.belongsTo(Publisher, {
+    foreignKey: 'publisher_id',
+    as: 'publisher'
 });
 
-Publisher.belongsTo(Publication, {
-    foreignKey: 'publication_id',
-    as: 'publication'
+Publisher.belongsTo(Admins, {
+    foreignKey: 'admin_id',
+    as: 'admin'
+});
+
+Publisher.hasMany(Publication, {
+    foreignKey: 'publisher_id',
+    as: 'publications'
 });
 
 Books.belongsTo(Categories, {

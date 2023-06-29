@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 27/06/2023 07:43:53
+ Date: 30/06/2023 06:01:37
 */
 
 SET NAMES utf8mb4;
@@ -32,14 +32,14 @@ CREATE TABLE `active_borrows`  (
   PRIMARY KEY (`active_borrow_id`) USING BTREE,
   INDEX `book_id`(`book_id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of active_borrows
 -- ----------------------------
-INSERT INTO `active_borrows` VALUES (1, 2, 1, '2023-06-26 03:20:27', '2023-06-27 03:20:27', '2023-06-26 03:20:27', '2023-06-27 06:28:13');
-INSERT INTO `active_borrows` VALUES (2, 1, 1, '2023-06-26 03:20:27', '2023-07-03 03:20:27', '2023-06-26 03:20:27', '2023-06-27 07:32:46');
-INSERT INTO `active_borrows` VALUES (3, 1, 3, '2023-06-26 03:20:27', '2023-07-03 03:20:27', '2023-06-26 03:20:27', '2023-06-27 07:30:37');
+INSERT INTO `active_borrows` VALUES (33, 8, 1, '2023-06-30 05:46:27', '2023-07-07 05:46:27', '2023-06-30 05:46:27', '2023-06-30 05:46:27');
+INSERT INTO `active_borrows` VALUES (32, 3, 1, '2023-06-30 05:45:53', '2023-07-07 05:45:53', '2023-06-30 05:45:53', '2023-06-30 05:45:53');
+INSERT INTO `active_borrows` VALUES (31, 1, 1, '2023-06-30 05:41:07', '2023-07-07 05:41:07', '2023-06-30 05:41:07', '2023-06-30 05:41:07');
 
 -- ----------------------------
 -- Table structure for admins
@@ -72,7 +72,7 @@ CREATE TABLE `authors`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `admin_id` bigint NOT NULL,
   PRIMARY KEY (`author_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of authors
@@ -81,6 +81,7 @@ INSERT INTO `authors` VALUES (1, 'Author 1', '2023-06-26 03:20:27', '2023-06-27 
 INSERT INTO `authors` VALUES (2, 'Author 2', '2023-06-26 03:20:27', '2023-06-27 06:05:24', 1);
 INSERT INTO `authors` VALUES (3, 'Author 3', '2023-06-26 03:20:27', '2023-06-27 06:05:25', 1);
 INSERT INTO `authors` VALUES (4, 'Jimmy', '2023-06-27 06:05:12', '2023-06-27 06:05:12', 1);
+INSERT INTO `authors` VALUES (5, 'Whocare', '2023-06-30 00:43:00', '2023-06-30 00:43:00', 1);
 
 -- ----------------------------
 -- Table structure for balance_histories
@@ -96,7 +97,7 @@ CREATE TABLE `balance_histories`  (
   PRIMARY KEY (`balance_history_id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `paid_to_admin_id`(`paid_to_admin_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of balance_histories
@@ -110,6 +111,13 @@ INSERT INTO `balance_histories` VALUES (6, 1, 1, 100, '2023-06-27 06:53:03', '20
 INSERT INTO `balance_histories` VALUES (7, 1, 1, 50, '2023-06-27 06:53:54', '2023-06-27 06:53:54');
 INSERT INTO `balance_histories` VALUES (8, 1, 1, 50, '2023-06-27 06:53:59', '2023-06-27 06:53:59');
 INSERT INTO `balance_histories` VALUES (16, 1, 1, -500, '2023-06-27 07:36:46', '2023-06-27 07:36:46');
+INSERT INTO `balance_histories` VALUES (17, 1, 1, -34, '2023-06-30 05:15:03', '2023-06-30 05:15:03');
+INSERT INTO `balance_histories` VALUES (18, 1, 1, -1, '2023-06-30 05:15:14', '2023-06-30 05:15:14');
+INSERT INTO `balance_histories` VALUES (19, 1, 1, -10, '2023-06-30 05:19:23', '2023-06-30 05:19:23');
+INSERT INTO `balance_histories` VALUES (20, 2, 1, 90, '2023-06-30 05:26:16', '2023-06-30 05:26:16');
+INSERT INTO `balance_histories` VALUES (21, 2, 1, 91, '2023-06-30 05:26:28', '2023-06-30 05:26:28');
+INSERT INTO `balance_histories` VALUES (22, 2, 1, 90, '2023-06-30 05:27:37', '2023-06-30 05:27:37');
+INSERT INTO `balance_histories` VALUES (23, 1, 1, 100, '2023-06-30 05:57:45', '2023-06-30 05:57:45');
 
 -- ----------------------------
 -- Table structure for books
@@ -123,10 +131,9 @@ CREATE TABLE `books`  (
   `language` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `has_active_borrow_requests` tinyint(1) NOT NULL DEFAULT 0,
   `user_borrow_count` bigint NOT NULL DEFAULT 0,
-  `publish_year` bigint NOT NULL,
   `category_id` bigint NOT NULL,
   `add_by_admin_id` bigint NOT NULL,
-  `active_borrow_id` bigint NOT NULL,
+  `active_borrow_id` bigint NULL DEFAULT NULL,
   `publication_id` bigint NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -136,16 +143,18 @@ CREATE TABLE `books`  (
   INDEX `category_id`(`category_id`) USING BTREE,
   INDEX `add_by_admin_id`(`add_by_admin_id`) USING BTREE,
   INDEX `active_borrow_id`(`active_borrow_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of books
 -- ----------------------------
-INSERT INTO `books` VALUES (1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 'English', 1, 0, 2000, 2, 2, 1, 1, '2023-06-26 03:20:27', '2023-06-27 05:50:38', 1);
-INSERT INTO `books` VALUES (2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 'English', 0, 0, 2005, 2, 2, 2, 2, '2023-06-26 03:20:27', '2023-06-27 05:50:39', 2);
-INSERT INTO `books` VALUES (3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 2010, 3, 3, 3, 3, '2023-06-26 03:20:27', '2023-06-27 05:50:39', 1);
-INSERT INTO `books` VALUES (4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 2010, 3, 3, 3, 3, '2023-06-26 07:41:55', '2023-06-27 05:50:41', 1);
-INSERT INTO `books` VALUES (5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 2010, 3, 3, 3, 3, '2023-06-26 07:42:02', '2023-06-27 05:50:40', 1);
+INSERT INTO `books` VALUES (1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 'English', 1, 0, 2, 2, 1, 1, '2023-06-26 03:20:27', '2023-06-30 05:41:07', 1);
+INSERT INTO `books` VALUES (2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 'English', 0, 0, 2, 2, 2, 2, '2023-06-26 03:20:27', '2023-06-30 06:00:23', 2);
+INSERT INTO `books` VALUES (3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 1, 0, 3, 3, 3, 3, '2023-06-26 03:20:27', '2023-06-30 05:45:53', 1);
+INSERT INTO `books` VALUES (4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 3, 3, 3, 3, '2023-06-26 07:41:55', '2023-06-27 05:50:41', 1);
+INSERT INTO `books` VALUES (5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 3, 3, 3, 3, '2023-06-26 07:42:02', '2023-06-27 05:50:40', 1);
+INSERT INTO `books` VALUES (8, 'How to hack', 'hack 101', 'https://i.imgur.com/tPSBfvy.jpg', 'English', 1, 0, 1, 1, NULL, 7, '2023-06-28 13:09:01', '2023-06-30 05:46:27', 1);
+INSERT INTO `books` VALUES (14, 'Title Who', 'Who', 'https://i.imgur.com/vRkartA.jpg', 'English', 0, 0, 4, 1, NULL, 18, '2023-06-30 01:44:26', '2023-06-30 01:44:26', 5);
 
 -- ----------------------------
 -- Table structure for categories
@@ -184,7 +193,7 @@ INSERT INTO `categories` VALUES (13, 'Computer', 1, '2023-06-27 05:30:34', '2023
 DROP TABLE IF EXISTS `publication`;
 CREATE TABLE `publication`  (
   `publication_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `year` bigint NOT NULL,
+  `publish_year` bigint NOT NULL,
   `series_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `volume` tinyint NULL DEFAULT NULL,
   `edition` tinyint NULL DEFAULT NULL,
@@ -192,15 +201,15 @@ CREATE TABLE `publication`  (
   `number_of_pages` tinyint NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `publisher_id` bigint NOT NULL,
   PRIMARY KEY (`publication_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of publication
 -- ----------------------------
-INSERT INTO `publication` VALUES (1, 2000, NULL, NULL, NULL, NULL, NULL, '2023-06-26 03:20:27', '2023-06-26 03:20:27');
-INSERT INTO `publication` VALUES (2, 2005, NULL, NULL, NULL, NULL, NULL, '2023-06-26 03:20:27', '2023-06-26 03:20:27');
-INSERT INTO `publication` VALUES (3, 2010, NULL, NULL, NULL, NULL, NULL, '2023-06-26 03:20:27', '2023-06-26 03:20:27');
+INSERT INTO `publication` VALUES (18, 2002, 'Who', 1, 1, 1, 127, '2023-06-30 01:44:26', '2023-06-30 01:44:26', 2);
+INSERT INTO `publication` VALUES (7, 2002, NULL, NULL, NULL, NULL, NULL, '2023-06-28 13:09:01', '2023-06-28 13:09:01', 1);
 
 -- ----------------------------
 -- Table structure for publisher
@@ -210,16 +219,18 @@ CREATE TABLE `publisher`  (
   `publisher_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `city` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
-  `publication_id` bigint NOT NULL,
+  `admin_id` bigint NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`publisher_id`) USING BTREE,
-  INDEX `publication_id`(`publication_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  INDEX `publication_id`(`admin_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of publisher
 -- ----------------------------
+INSERT INTO `publisher` VALUES (1, 'Parag', NULL, 1, '2023-06-28 12:29:11', '2023-06-28 12:29:11');
+INSERT INTO `publisher` VALUES (2, 'ParaWho', NULL, 1, '2023-06-30 01:43:38', '2023-06-30 01:43:38');
 
 -- ----------------------------
 -- Table structure for user_borrow_history
@@ -235,15 +246,38 @@ CREATE TABLE `user_borrow_history`  (
   `total_borrow_day` bigint NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `return_late_by_day` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`user_borrow_history_id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `book_id`(`book_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of user_borrow_history
 -- ----------------------------
-INSERT INTO `user_borrow_history` VALUES (1, 1, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2023-06-26 08:01:40', '2023-06-26 09:23:26');
+INSERT INTO `user_borrow_history` VALUES (1, 1, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2023-06-26 08:01:40', '2023-06-26 09:23:26', NULL);
+INSERT INTO `user_borrow_history` VALUES (2, 1, 2, '2023-06-26 03:20:27', '2023-06-30 03:09:25', '2023-06-27 03:20:27', 4, '2023-06-30 03:09:25', '2023-06-30 03:09:25', NULL);
+INSERT INTO `user_borrow_history` VALUES (3, 1, 1, '2023-06-26 03:20:27', '2023-06-30 03:20:49', '2023-07-03 03:20:27', 4, '2023-06-30 03:20:49', '2023-06-30 03:20:49', NULL);
+INSERT INTO `user_borrow_history` VALUES (4, 3, 1, '2023-06-26 03:20:27', '2023-06-30 03:41:09', '2023-07-03 03:20:27', 4, '2023-06-30 03:41:09', '2023-06-30 03:41:09', NULL);
+INSERT INTO `user_borrow_history` VALUES (5, 3, 3, '2023-06-30 03:48:33', '2023-06-30 03:49:12', '2023-07-07 03:48:33', 0, '2023-06-30 03:49:12', '2023-06-30 03:49:12', NULL);
+INSERT INTO `user_borrow_history` VALUES (6, 2, 2, '2023-06-30 03:48:33', '2023-06-30 04:04:09', '2023-07-07 03:48:33', 0, '2023-06-30 04:04:09', '2023-06-30 04:04:09', NULL);
+INSERT INTO `user_borrow_history` VALUES (7, 1, 1, '2023-06-30 03:48:33', '2023-06-30 04:04:55', '2023-07-07 03:48:33', 0, '2023-06-30 04:04:55', '2023-06-30 04:04:55', NULL);
+INSERT INTO `user_borrow_history` VALUES (8, 3, 3, '2023-06-30 04:06:14', '2023-06-30 04:12:51', '2023-07-07 04:06:14', 0, '2023-06-30 04:12:51', '2023-06-30 04:12:51', NULL);
+INSERT INTO `user_borrow_history` VALUES (9, 2, 2, '2023-06-30 04:06:14', '2023-06-30 04:15:03', '2023-07-07 04:06:14', 0, '2023-06-30 04:15:03', '2023-06-30 04:15:03', NULL);
+INSERT INTO `user_borrow_history` VALUES (10, 2, 2, '2023-06-30 04:22:49', '2023-06-30 04:24:15', '2023-07-07 04:22:49', 0, '2023-06-30 04:24:15', '2023-06-30 04:24:15', NULL);
+INSERT INTO `user_borrow_history` VALUES (11, 1, 1, '2023-06-30 04:22:49', '2023-06-30 04:27:49', '2023-07-07 04:22:49', 0, '2023-06-30 04:27:49', '2023-06-30 04:27:49', NULL);
+INSERT INTO `user_borrow_history` VALUES (12, 1, 1, '2023-06-30 04:06:14', '2023-06-30 04:30:01', '2023-07-07 04:06:14', 0, '2023-06-30 04:30:01', '2023-06-30 04:30:01', NULL);
+INSERT INTO `user_borrow_history` VALUES (13, 3, 3, '2023-06-30 04:22:49', '2023-06-30 04:36:15', '2023-06-29 04:22:49', 0, '2023-06-30 04:36:15', '2023-06-30 04:36:15', NULL);
+INSERT INTO `user_borrow_history` VALUES (14, 1, 1, '2023-06-26 03:20:27', '2023-06-30 04:41:07', '2023-06-30 03:09:25', -4, '2023-06-30 04:41:07', '2023-06-30 04:41:07', NULL);
+INSERT INTO `user_borrow_history` VALUES (15, 3, 3, '2023-06-30 04:40:07', '2023-06-30 04:59:03', '2023-07-07 04:40:07', 0, '2023-06-30 04:59:03', '2023-06-30 04:59:03', 0);
+INSERT INTO `user_borrow_history` VALUES (16, 2, 2, '2023-05-30 04:40:07', '2023-06-30 05:00:20', '2023-06-07 04:40:07', 31, '2023-06-30 05:00:20', '2023-06-30 05:00:20', 23);
+INSERT INTO `user_borrow_history` VALUES (17, 2, 2, '2023-05-26 03:20:27', '2023-06-30 05:05:45', '2023-05-27 03:20:27', 35, '2023-06-30 05:05:45', '2023-06-30 05:05:45', 34);
+INSERT INTO `user_borrow_history` VALUES (18, 1, 1, '2023-05-26 03:20:27', '2023-06-30 05:06:13', '2023-05-27 03:20:27', 35, '2023-06-30 05:06:13', '2023-06-30 05:06:13', 34);
+INSERT INTO `user_borrow_history` VALUES (19, 3, 3, '2023-06-30 04:40:07', '2023-06-30 05:06:44', '2023-07-07 04:40:07', 0, '2023-06-30 05:06:44', '2023-06-30 05:06:44', 0);
+INSERT INTO `user_borrow_history` VALUES (20, 3, 3, '2023-06-30 05:05:34', '2023-06-30 05:07:28', '2023-07-07 05:05:34', 0, '2023-06-30 05:07:28', '2023-06-30 05:07:28', 0);
+INSERT INTO `user_borrow_history` VALUES (21, 1, 1, '2023-06-30 04:40:07', '2023-06-30 05:07:53', '2023-07-07 04:40:07', 0, '2023-06-30 05:07:53', '2023-06-30 05:07:53', 0);
+INSERT INTO `user_borrow_history` VALUES (22, 2, 2, '2023-05-26 03:20:27', '2023-06-30 05:08:26', '2023-05-27 03:20:27', 35, '2023-06-30 05:08:26', '2023-06-30 05:08:26', 34);
+INSERT INTO `user_borrow_history` VALUES (23, 1, 2, '2023-06-30 05:47:17', '2023-06-30 06:00:23', '2023-07-07 05:47:17', 0, '2023-06-30 06:00:23', '2023-06-30 06:00:23', 0);
 
 -- ----------------------------
 -- Table structure for users
@@ -261,17 +295,96 @@ CREATE TABLE `users`  (
   `contact_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `debt` bigint NULL DEFAULT 0,
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'user1', 'password1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 815, 'sohphomore', 'Male', 'user1@example.com', '0123456', '2023-06-26 03:20:27', '2023-06-27 07:36:46');
-INSERT INTO `users` VALUES (2, 'user2', 'password2', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, NULL, 'user2@example.com', NULL, '2023-06-26 03:20:27', '2023-06-27 06:18:10');
-INSERT INTO `users` VALUES (3, 'user3', 'password3', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, NULL, 'user3@example.com', NULL, '2023-06-26 03:20:27', '2023-06-27 06:18:11');
-INSERT INTO `users` VALUES (4, 'test1', 'test1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Other', 'test1@gmail.com', NULL, '2023-06-26 06:51:36', '2023-06-26 06:51:36');
-INSERT INTO `users` VALUES (12, 'test', '123', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Female', 'test@gmail.com', NULL, '2023-06-26 07:09:08', '2023-06-26 07:09:08');
-INSERT INTO `users` VALUES (9, 'test2', 'test', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Male', 'test2@gmail.com', NULL, '2023-06-26 07:01:37', '2023-06-26 07:01:37');
+INSERT INTO `users` VALUES (1, 'user1', 'password1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 870, 'sohphomore', 'Male', 'user1@example.com', '0123456', '2023-06-26 03:20:27', '2023-06-30 05:57:45', 0);
+INSERT INTO `users` VALUES (2, 'user2', 'password2', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 180, NULL, NULL, 'user2@example.com', NULL, '2023-06-26 03:20:27', '2023-06-30 05:27:37', 91);
+INSERT INTO `users` VALUES (3, 'user3', 'password3', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, NULL, 'user3@example.com', NULL, '2023-06-26 03:20:27', '2023-06-30 04:15:01', 0);
+INSERT INTO `users` VALUES (4, 'test1', 'test1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Other', 'test1@gmail.com', NULL, '2023-06-26 06:51:36', '2023-06-26 06:51:36', 0);
+INSERT INTO `users` VALUES (12, 'test', '123', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Female', 'test@gmail.com', NULL, '2023-06-26 07:09:08', '2023-06-26 07:09:08', 0);
+INSERT INTO `users` VALUES (9, 'test2', 'test', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Male', 'test2@gmail.com', NULL, '2023-06-26 07:01:37', '2023-06-26 07:01:37', 0);
+
+-- ----------------------------
+-- Procedure structure for insert_user_borrow_history
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `insert_user_borrow_history`;
+delimiter ;;
+CREATE PROCEDURE `insert_user_borrow_history`(IN activeBorrowId BIGINT)
+BEGIN
+    DECLARE v_user_id BIGINT;
+    DECLARE v_book_id BIGINT;
+    DECLARE v_borrow_date TIMESTAMP;
+    DECLARE v_return_date TIMESTAMP;
+    DECLARE v_date_to_be_return TIMESTAMP;
+    DECLARE v_total_borrow_day BIGINT;
+    DECLARE v_return_late_by_day BIGINT;
+
+    SELECT user_id, book_id, borrow_date, date_to_be_return
+    INTO v_user_id, v_book_id, v_borrow_date, v_date_to_be_return
+    FROM active_borrows
+    WHERE active_borrow_id = activeBorrowId;
+
+    SET v_return_date = NOW();
+    SET v_total_borrow_day = total_borrow_day(v_borrow_date, v_return_date);
+    SET v_return_late_by_day = return_late_by_day(v_return_date, v_date_to_be_return);
+
+    INSERT INTO user_borrow_history(user_id, book_id, borrow_date, return_date, date_to_be_return, total_borrow_day, return_late_by_day)
+    VALUES(v_user_id, v_book_id, v_borrow_date, v_return_date, v_date_to_be_return, v_total_borrow_day, v_return_late_by_day);
+		
+    DELETE FROM active_borrows WHERE active_borrow_id = activeBorrowId;
+
+    UPDATE books SET has_active_borrow_requests = FALSE WHERE book_id = v_book_id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Function structure for return_late_by_day
+-- ----------------------------
+DROP FUNCTION IF EXISTS `return_late_by_day`;
+delimiter ;;
+CREATE FUNCTION `return_late_by_day`(return_date DATE, date_to_be_return DATE)
+ RETURNS int
+BEGIN
+    RETURN GREATEST(0, DATEDIFF(return_date, date_to_be_return));
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Function structure for total_borrow_day
+-- ----------------------------
+DROP FUNCTION IF EXISTS `total_borrow_day`;
+delimiter ;;
+CREATE FUNCTION `total_borrow_day`(borrow_date DATE, return_date DATE)
+ RETURNS int
+  DETERMINISTIC
+BEGIN
+    DECLARE total_day INT;
+    SET total_day = DATEDIFF(return_date, borrow_date);
+    RETURN total_day;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table user_borrow_history
+-- ----------------------------
+DROP TRIGGER IF EXISTS `update_user_debt`;
+delimiter ;;
+CREATE TRIGGER `update_user_debt` AFTER INSERT ON `user_borrow_history` FOR EACH ROW BEGIN
+    IF NEW.return_late_by_day > 0 THEN
+        UPDATE users
+        SET debt = debt + NEW.return_late_by_day
+        WHERE user_id = NEW.user_id;
+    END IF;
+END
+;;
+delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;

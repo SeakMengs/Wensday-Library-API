@@ -15,12 +15,13 @@ const attributes = {
     city: {
         type: DataTypes.STRING,
     },
-    publication_id : {
+    admin_id: {
         type: DataTypes.BIGINT,
-        reference: {
-            model : 'publication',
-            key: 'publication_id'
+        references: {
+            model: 'admin',
+            key: 'admin_id',
         },
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,
