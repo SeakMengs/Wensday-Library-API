@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 30/06/2023 06:01:46
+ Date: 01/07/2023 06:45:06
 */
 
 SET NAMES utf8mb4;
@@ -30,9 +30,9 @@ CREATE TABLE `active_borrows`  (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`active_borrow_id`) USING BTREE,
-  INDEX `book_id`(`book_id`) USING BTREE,
-  INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
+  INDEX `book_id`(`book_id` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for admins
@@ -45,7 +45,7 @@ CREATE TABLE `admins`  (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`admin_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for authors
@@ -58,7 +58,7 @@ CREATE TABLE `authors`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `admin_id` bigint NOT NULL,
   PRIMARY KEY (`author_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for balance_histories
@@ -72,9 +72,9 @@ CREATE TABLE `balance_histories`  (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`balance_history_id`) USING BTREE,
-  INDEX `user_id`(`user_id`) USING BTREE,
-  INDEX `paid_to_admin_id`(`paid_to_admin_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `paid_to_admin_id`(`paid_to_admin_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for books
@@ -96,11 +96,11 @@ CREATE TABLE `books`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `author_id` bigint NOT NULL,
   PRIMARY KEY (`book_id`) USING BTREE,
-  INDEX `publication_id`(`publication_id`) USING BTREE,
-  INDEX `category_id`(`category_id`) USING BTREE,
-  INDEX `add_by_admin_id`(`add_by_admin_id`) USING BTREE,
-  INDEX `active_borrow_id`(`active_borrow_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  INDEX `publication_id`(`publication_id` ASC) USING BTREE,
+  INDEX `category_id`(`category_id` ASC) USING BTREE,
+  INDEX `add_by_admin_id`(`add_by_admin_id` ASC) USING BTREE,
+  INDEX `active_borrow_id`(`active_borrow_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for categories
@@ -113,8 +113,8 @@ CREATE TABLE `categories`  (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`) USING BTREE,
-  INDEX `add_by_admin_id`(`add_by_admin_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  INDEX `add_by_admin_id`(`add_by_admin_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for publication
@@ -132,7 +132,7 @@ CREATE TABLE `publication`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `publisher_id` bigint NOT NULL,
   PRIMARY KEY (`publication_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for publisher
@@ -146,8 +146,8 @@ CREATE TABLE `publisher`  (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`publisher_id`) USING BTREE,
-  INDEX `publication_id`(`admin_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  INDEX `publication_id`(`admin_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_borrow_history
@@ -165,9 +165,9 @@ CREATE TABLE `user_borrow_history`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `return_late_by_day` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`user_borrow_history_id`) USING BTREE,
-  INDEX `user_id`(`user_id`) USING BTREE,
-  INDEX `book_id`(`book_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Fixed;
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `book_id`(`book_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for users
@@ -187,7 +187,7 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `debt` bigint NULL DEFAULT 0,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Procedure structure for insert_user_borrow_history

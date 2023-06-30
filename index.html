@@ -11,6 +11,7 @@
     <h1 id="test">hi</h1>
 
     <button onclick="testFetch()">fetch</button>
+    <button onclick="testTransaction()">fetch Transaction</button>
 </body>
 
 </html>
@@ -48,5 +49,15 @@
         } else {
             console.log(data)
         }
+    }
+
+    async function testTransaction() {
+        const res = await fetch('http://localhost:3000/test', {
+            method: 'POST',
+        })
+
+        const data = await res.json()
+
+        console.log(data)
     }
 </script>

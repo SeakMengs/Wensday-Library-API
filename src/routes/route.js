@@ -3,18 +3,22 @@ import { getAllCategory, userLogin, getAllBook, getAllBookById, getOneUserById, 
 
 const router = express.Router();
 
-router.get('/hello', (req, res) => {
-    res.json({ message: "Hello World" });
-});
+//*-------------------------Get Routes-------------------------
+router.get('/author/all', getAllAuthor);
+router.get('/publisher/all', getAllPublisher);
+router.get('/category/all', getAllCategory);
+router.get('/book/all', getAllBook);
+router.get('/book/:id', getAllBookById);
+router.get('/user/:id', getOneUserById);
+router.get('/admin/:id', getOneAdminById);
+router.get('/activeBorrows', getAllActiveBorrow);
+//*-------------------------End of Get Routes-------------------------
 
-// check req.body compare email and password
-// return status 200 if success, 401 if failed
+
+//*-------------------------Post Routes-------------------------
 router.post('/user/login', userLogin);
-router.post('/user/signup', userSignup); 
-
-// query by username
-router.post('/admin/login', adminLogin); 
-
+router.post('/user/signup', userSignup);
+router.post('/admin/login', adminLogin);
 router.post('/createCategory', createCategory);
 router.post('/createPublisher', createPublisher);
 router.post('/createAuthor', createAuthor);
@@ -22,36 +26,7 @@ router.post('/updateBalance', updateBalance);
 router.post('/addBook', addBook);
 router.post('/updateActiveBorrow/:active_borrow_id', updateReturnBook);
 router.post('/borrowBook/:book_id', borrowBook);
+//*-------------------------End of Post Routes-------------------------
 
-router.get('/author/all', getAllAuthor);
-router.get('/publisher/all', getAllPublisher);
-
-// TODO: Query Here Bro
-
-// query all category
-router.get('/category/all', getAllCategory);
-
-// query all books join with 
-// 1. hasMany publication, publication hasMany publisher
-// 2. hasMany categories
-// 3. hasOne admin
-// 4. hasOne active_borrows. active_borrows hasOne user
-// 5. hasMany authors
-router.get('/book/all', getAllBook);
-
-// same as above but get only one book by id
-router.get('/book/:id', getAllBookById);
-
-// get user by id join with
-// 1. balance_histories
-// 2. active_borrows
-// 3. borrow_histories (all hasMany)
-router.get('/user/:id', getOneUserById);
-router.get('/admin/:id', getOneAdminById);
-
-// get all active borrows
-router.get('/activeBorrows', getAllActiveBorrow);
-
-//*--------------------------------------- End of Query
 
 export default router;

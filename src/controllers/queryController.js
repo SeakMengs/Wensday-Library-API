@@ -583,10 +583,9 @@ export const updateReturnBook = async (req, res) => {
         const { active_borrow_id } = req.params;
 
         const returnBook = await sequelize.query(`CALL insert_user_borrow_history(:activeBorrowId)`, {
-            // replacements: { activeBorrowId: active_borrow_id }
+            // this is the way to pass parameter to stored procedure
             replacements: { activeBorrowId: active_borrow_id }
         })
-
 
         res.status(200).json({
             message: "Return Book Success",
