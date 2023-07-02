@@ -20,10 +20,6 @@ const attributes = {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    language: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     has_active_borrow_requests:{
         type: DataTypes.TINYINT,
         allowNull: false,
@@ -37,6 +33,14 @@ const attributes = {
         reference: {
             model: 'categories',
             id: 'categories_id'
+        },
+        allowNull: false,
+    },
+    language_id: {
+        type: DataTypes.BIGINT,
+        reference: {
+            model: 'languages',
+            id: 'language_id'
         },
         allowNull: false,
     },

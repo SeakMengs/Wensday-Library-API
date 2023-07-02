@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 01/07/2023 06:44:52
+ Date: 03/07/2023 05:26:48
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,6 @@ CREATE TABLE `active_borrows`  (
 -- ----------------------------
 -- Records of active_borrows
 -- ----------------------------
-INSERT INTO `active_borrows` VALUES (31, 1, 1, '2023-06-30 05:41:07', '2023-07-07 05:41:07', '2023-06-30 05:41:07', '2023-06-30 05:41:07');
 INSERT INTO `active_borrows` VALUES (32, 3, 1, '2023-06-30 05:45:53', '2023-07-07 05:45:53', '2023-06-30 05:45:53', '2023-06-30 05:45:53');
 INSERT INTO `active_borrows` VALUES (33, 8, 1, '2023-06-30 05:46:27', '2023-07-07 05:46:27', '2023-06-30 05:46:27', '2023-06-30 05:46:27');
 
@@ -97,7 +96,7 @@ CREATE TABLE `balance_histories`  (
   PRIMARY KEY (`balance_history_id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   INDEX `paid_to_admin_id`(`paid_to_admin_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of balance_histories
@@ -118,6 +117,8 @@ INSERT INTO `balance_histories` VALUES (20, 2, 1, 90, '2023-06-30 05:26:16', '20
 INSERT INTO `balance_histories` VALUES (21, 2, 1, 91, '2023-06-30 05:26:28', '2023-06-30 05:26:28');
 INSERT INTO `balance_histories` VALUES (22, 2, 1, 90, '2023-06-30 05:27:37', '2023-06-30 05:27:37');
 INSERT INTO `balance_histories` VALUES (23, 1, 1, 100, '2023-06-30 05:57:45', '2023-06-30 05:57:45');
+INSERT INTO `balance_histories` VALUES (24, 1, 1, 500, '2023-07-03 01:06:29', '2023-07-03 01:06:29');
+INSERT INTO `balance_histories` VALUES (25, 1, 1, -1, '2023-07-03 01:06:47', '2023-07-03 01:06:47');
 
 -- ----------------------------
 -- Table structure for books
@@ -128,7 +129,7 @@ CREATE TABLE `books`  (
   `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `cover_image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `language` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `language_id` bigint NOT NULL,
   `has_active_borrow_requests` tinyint(1) NOT NULL DEFAULT 0,
   `user_borrow_count` bigint NOT NULL DEFAULT 0,
   `category_id` bigint NOT NULL,
@@ -143,20 +144,22 @@ CREATE TABLE `books`  (
   INDEX `category_id`(`category_id` ASC) USING BTREE,
   INDEX `add_by_admin_id`(`add_by_admin_id` ASC) USING BTREE,
   INDEX `active_borrow_id`(`active_borrow_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of books
 -- ----------------------------
-INSERT INTO `books` VALUES (1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 'French', 1, 0, 2, 2, 1, 1, '2023-06-26 03:20:27', '2023-07-01 05:24:18', 1);
-INSERT INTO `books` VALUES (2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 'English', 0, 0, 2, 2, 2, 2, '2023-06-26 03:20:27', '2023-06-30 06:00:23', 2);
-INSERT INTO `books` VALUES (3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 1, 0, 3, 3, 3, 3, '2023-06-26 03:20:27', '2023-06-30 05:45:53', 1);
-INSERT INTO `books` VALUES (4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 3, 3, 3, 3, '2023-06-26 07:41:55', '2023-06-27 05:50:41', 1);
-INSERT INTO `books` VALUES (5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 3, 3, 3, 3, '2023-06-26 07:42:02', '2023-06-27 05:50:40', 1);
-INSERT INTO `books` VALUES (8, 'How to hack', 'hack 101', 'https://i.imgur.com/tPSBfvy.jpg', 'English', 1, 0, 1, 1, NULL, 7, '2023-06-28 13:09:01', '2023-06-30 05:46:27', 1);
-INSERT INTO `books` VALUES (14, 'Title Who', 'Who', 'https://i.imgur.com/vRkartA.jpg', 'English', 0, 0, 4, 1, NULL, 18, '2023-06-30 01:44:26', '2023-06-30 01:44:26', 5);
-INSERT INTO `books` VALUES (15, 'Transaction ', 'Transaction ma money yo', 'https://i.imgur.com/T7V2GLk.jpg', 'German', 0, 0, 2, 1, NULL, 19, '2023-07-01 06:37:38', '2023-07-01 06:37:38', 5);
-INSERT INTO `books` VALUES (16, 'Transaction2', 'Transaction ma money yo 2', 'https://i.imgur.com/T7V2GLk.jpg', 'German', 0, 0, 2, 1, NULL, 20, '2023-07-01 06:37:51', '2023-07-01 06:38:29', 5);
+INSERT INTO `books` VALUES (1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 1, 0, 0, 2, 2, 1, 1, '2023-06-26 03:20:27', '2023-07-03 04:05:18', 1);
+INSERT INTO `books` VALUES (2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 1, 0, 0, 2, 2, 2, 2, '2023-06-26 03:20:27', '2023-07-03 04:05:19', 2);
+INSERT INTO `books` VALUES (3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 1, 0, 3, 3, 3, 3, '2023-06-26 03:20:27', '2023-07-03 04:05:20', 1);
+INSERT INTO `books` VALUES (4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 3, '2023-06-26 07:41:55', '2023-07-03 04:05:22', 1);
+INSERT INTO `books` VALUES (5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 3, '2023-06-26 07:42:02', '2023-07-03 04:05:23', 1);
+INSERT INTO `books` VALUES (8, 'How to hack', 'hack 101', 'https://i.imgur.com/tPSBfvy.jpg', 2, 1, 0, 1, 1, NULL, 7, '2023-06-28 13:09:01', '2023-07-03 04:38:22', 1);
+INSERT INTO `books` VALUES (14, 'Title Who', 'Who', 'https://i.imgur.com/vRkartA.jpg', 1, 0, 0, 4, 1, NULL, 18, '2023-06-30 01:44:26', '2023-07-03 04:05:25', 5);
+INSERT INTO `books` VALUES (15, 'Transaction ', 'Transaction ma money yo', 'https://i.imgur.com/T7V2GLk.jpg', 1, 0, 0, 2, 1, NULL, 19, '2023-07-01 06:37:38', '2023-07-03 04:05:26', 5);
+INSERT INTO `books` VALUES (16, 'Transaction2', 'Transaction ma money yo 2', 'https://i.imgur.com/T7V2GLk.jpg', 1, 0, 0, 2, 1, NULL, 20, '2023-07-01 06:37:51', '2023-07-03 04:05:28', 5);
+INSERT INTO `books` VALUES (17, 'Who', 'whoo', 'https://i.imgur.com/IYHdWPz.jpg', 1, 0, 0, 1, 1, NULL, 23, '2023-07-03 01:09:13', '2023-07-03 04:14:42', 1);
+INSERT INTO `books` VALUES (18, 'LanguageShesh', 'LanguageShesh LanguageShesh LanguageShesh LanguageShesh', 'https://i.imgur.com/liNIrRW.jpg', 3, 0, 0, 1, 1, NULL, 26, '2023-07-03 04:45:24', '2023-07-03 04:45:24', 5);
 
 -- ----------------------------
 -- Table structure for categories
@@ -189,6 +192,26 @@ INSERT INTO `categories` VALUES (12, 'Biography', 1, '2023-06-26 07:30:51', '202
 INSERT INTO `categories` VALUES (13, 'Computer', 1, '2023-06-27 05:30:34', '2023-06-27 05:30:34');
 
 -- ----------------------------
+-- Table structure for languages
+-- ----------------------------
+DROP TABLE IF EXISTS `languages`;
+CREATE TABLE `languages`  (
+  `language_id` bigint NOT NULL AUTO_INCREMENT,
+  `language` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `admin_id` bigint NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`language_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of languages
+-- ----------------------------
+INSERT INTO `languages` VALUES (1, 'English', 1, '2023-07-03 04:08:41', '2023-07-03 04:08:41');
+INSERT INTO `languages` VALUES (2, 'French', 1, '2023-07-03 04:35:07', '2023-07-03 04:35:07');
+INSERT INTO `languages` VALUES (3, 'Korean', 1, '2023-07-03 04:36:56', '2023-07-03 04:36:56');
+
+-- ----------------------------
 -- Table structure for publication
 -- ----------------------------
 DROP TABLE IF EXISTS `publication`;
@@ -204,7 +227,7 @@ CREATE TABLE `publication`  (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `publisher_id` bigint NOT NULL,
   PRIMARY KEY (`publication_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of publication
@@ -213,6 +236,8 @@ INSERT INTO `publication` VALUES (7, 2002, NULL, NULL, NULL, NULL, NULL, '2023-0
 INSERT INTO `publication` VALUES (18, 2002, 'Who', 1, 1, 1, 127, '2023-06-30 01:44:26', '2023-06-30 01:44:26', 2);
 INSERT INTO `publication` VALUES (19, 2006, 'Transaction ma money', 1, 1, NULL, 127, '2023-07-01 06:37:38', '2023-07-01 06:37:38', 2);
 INSERT INTO `publication` VALUES (20, 2006, 'Transaction ma money', 1, 1, NULL, 127, '2023-07-01 06:37:51', '2023-07-01 06:37:51', 2);
+INSERT INTO `publication` VALUES (23, 2002, '1111', 127, 127, 111, 127, '2023-07-03 01:09:13', '2023-07-03 01:09:13', 2);
+INSERT INTO `publication` VALUES (26, 1090, 'LanguageShesh', 1, 1, 1, 127, '2023-07-03 04:45:24', '2023-07-03 04:45:24', 1);
 
 -- ----------------------------
 -- Table structure for publisher
@@ -253,7 +278,7 @@ CREATE TABLE `user_borrow_history`  (
   PRIMARY KEY (`user_borrow_history_id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   INDEX `book_id`(`book_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_borrow_history
@@ -281,6 +306,7 @@ INSERT INTO `user_borrow_history` VALUES (20, 3, 3, '2023-06-30 05:05:34', '2023
 INSERT INTO `user_borrow_history` VALUES (21, 1, 1, '2023-06-30 04:40:07', '2023-06-30 05:07:53', '2023-07-07 04:40:07', 0, '2023-06-30 05:07:53', '2023-06-30 05:07:53', 0);
 INSERT INTO `user_borrow_history` VALUES (22, 2, 2, '2023-05-26 03:20:27', '2023-06-30 05:08:26', '2023-05-27 03:20:27', 35, '2023-06-30 05:08:26', '2023-06-30 05:08:26', 34);
 INSERT INTO `user_borrow_history` VALUES (23, 1, 2, '2023-06-30 05:47:17', '2023-06-30 06:00:23', '2023-07-07 05:47:17', 0, '2023-06-30 06:00:23', '2023-06-30 06:00:23', 0);
+INSERT INTO `user_borrow_history` VALUES (24, 1, 1, '2023-06-30 05:41:07', '2023-07-03 01:04:58', '2023-07-02 05:41:07', 3, '2023-07-03 01:04:58', '2023-07-03 01:04:58', 1);
 
 -- ----------------------------
 -- Table structure for users
@@ -305,7 +331,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'user1', 'password1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 870, 'sohphomore', 'Male', 'user1@example.com', '0123456', '2023-06-26 03:20:27', '2023-06-30 05:57:45', 0);
+INSERT INTO `users` VALUES (1, 'user1', 'password1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 1369, 'sohphomore', 'Male', 'user1@example.com', '0123456', '2023-06-26 03:20:27', '2023-07-03 01:06:47', 0);
 INSERT INTO `users` VALUES (2, 'user2', 'password2', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 180, NULL, NULL, 'user2@example.com', NULL, '2023-06-26 03:20:27', '2023-06-30 05:27:37', 91);
 INSERT INTO `users` VALUES (3, 'user3', 'password3', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, NULL, 'user3@example.com', NULL, '2023-06-26 03:20:27', '2023-06-30 04:15:01', 0);
 INSERT INTO `users` VALUES (4, 'test1', 'test1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Other', 'test1@gmail.com', NULL, '2023-06-26 06:51:36', '2023-06-26 06:51:36', 0);

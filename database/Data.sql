@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 29, 2023 at 11:05 PM
+-- Generation Time: Jul 02, 2023 at 10:28 PM
 -- Server version: 8.0.31
 -- PHP Version: 7.4.33
 
@@ -26,9 +26,8 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `active_borrows` (`active_borrow_id`, `book_id`, `user_id`, `borrow_date`, `date_to_be_return`, `created_at`, `updated_at`) VALUES
-(33, 8, 1, '2023-06-29 22:46:27', '2023-07-06 22:46:27', '2023-06-29 22:46:27', '2023-06-29 22:46:27'),
 (32, 3, 1, '2023-06-29 22:45:53', '2023-07-06 22:45:53', '2023-06-29 22:45:53', '2023-06-29 22:45:53'),
-(31, 1, 1, '2023-06-29 22:41:07', '2023-07-06 22:41:07', '2023-06-29 22:41:07', '2023-06-29 22:41:07');
+(33, 8, 1, '2023-06-29 22:46:27', '2023-07-06 22:46:27', '2023-06-29 22:46:27', '2023-06-29 22:46:27');
 
 --
 -- Dumping data for table `admins`
@@ -55,8 +54,8 @@ INSERT INTO `authors` (`author_id`, `name`, `created_at`, `updated_at`, `admin_i
 --
 
 INSERT INTO `balance_histories` (`balance_history_id`, `user_id`, `paid_to_admin_id`, `paid_amount`, `created_at`, `updated_at`) VALUES
-(2, 5, 2, 500, '2023-06-26 01:01:23', '2023-06-27 00:10:26'),
 (1, 5, 1, 555, '2023-06-26 23:47:33', '2023-06-27 00:10:28'),
+(2, 5, 2, 500, '2023-06-26 01:01:23', '2023-06-27 00:10:26'),
 (3, 5, 1, 500, '2023-06-26 23:48:59', '2023-06-26 23:48:59'),
 (4, 5, 1, 5, '2023-06-26 23:49:52', '2023-06-26 23:49:52'),
 (5, 1, 1, 55, '2023-06-26 23:51:03', '2023-06-26 23:51:03'),
@@ -70,20 +69,26 @@ INSERT INTO `balance_histories` (`balance_history_id`, `user_id`, `paid_to_admin
 (20, 2, 1, 90, '2023-06-29 22:26:16', '2023-06-29 22:26:16'),
 (21, 2, 1, 91, '2023-06-29 22:26:28', '2023-06-29 22:26:28'),
 (22, 2, 1, 90, '2023-06-29 22:27:37', '2023-06-29 22:27:37'),
-(23, 1, 1, 100, '2023-06-29 22:57:45', '2023-06-29 22:57:45');
+(23, 1, 1, 100, '2023-06-29 22:57:45', '2023-06-29 22:57:45'),
+(24, 1, 1, 500, '2023-07-02 18:06:29', '2023-07-02 18:06:29'),
+(25, 1, 1, -1, '2023-07-02 18:06:47', '2023-07-02 18:06:47');
 
 --
 -- Dumping data for table `books`
 --
 
-INSERT INTO `books` (`book_id`, `title`, `description`, `cover_image`, `language`, `has_active_borrow_requests`, `user_borrow_count`, `category_id`, `add_by_admin_id`, `active_borrow_id`, `publication_id`, `created_at`, `updated_at`, `author_id`) VALUES
-(1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 'English', 1, 0, 2, 2, 1, 1, '2023-06-25 20:20:27', '2023-06-29 22:41:07', 1),
-(2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 'English', 0, 0, 2, 2, 2, 2, '2023-06-25 20:20:27', '2023-06-29 23:00:23', 2),
-(3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 1, 0, 3, 3, 3, 3, '2023-06-25 20:20:27', '2023-06-29 22:45:53', 1),
-(4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 3, 3, 3, 3, '2023-06-26 00:41:55', '2023-06-26 22:50:41', 1),
-(5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 'English', 0, 0, 3, 3, 3, 3, '2023-06-26 00:42:02', '2023-06-26 22:50:40', 1),
-(8, 'How to hack', 'hack 101', 'https://i.imgur.com/tPSBfvy.jpg', 'English', 1, 0, 1, 1, NULL, 7, '2023-06-28 06:09:01', '2023-06-29 22:46:27', 1),
-(14, 'Title Who', 'Who', 'https://i.imgur.com/vRkartA.jpg', 'English', 0, 0, 4, 1, NULL, 18, '2023-06-29 18:44:26', '2023-06-29 18:44:26', 5);
+INSERT INTO `books` (`book_id`, `title`, `description`, `cover_image`, `language_id`, `has_active_borrow_requests`, `user_borrow_count`, `category_id`, `add_by_admin_id`, `active_borrow_id`, `publication_id`, `created_at`, `updated_at`, `author_id`) VALUES
+(1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 1, 0, 0, 2, 2, 1, 1, '2023-06-25 20:20:27', '2023-07-02 21:05:18', 1),
+(2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 1, 0, 0, 2, 2, 2, 2, '2023-06-25 20:20:27', '2023-07-02 21:05:19', 2),
+(3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 1, 0, 3, 3, 3, 3, '2023-06-25 20:20:27', '2023-07-02 21:05:20', 1),
+(4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 3, '2023-06-26 00:41:55', '2023-07-02 21:05:22', 1),
+(5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 3, '2023-06-26 00:42:02', '2023-07-02 21:05:23', 1),
+(8, 'How to hack', 'hack 101', 'https://i.imgur.com/tPSBfvy.jpg', 2, 1, 0, 1, 1, NULL, 7, '2023-06-28 06:09:01', '2023-07-02 21:38:22', 1),
+(14, 'Title Who', 'Who', 'https://i.imgur.com/vRkartA.jpg', 1, 0, 0, 4, 1, NULL, 18, '2023-06-29 18:44:26', '2023-07-02 21:05:25', 5),
+(15, 'Transaction ', 'Transaction ma money yo', 'https://i.imgur.com/T7V2GLk.jpg', 1, 0, 0, 2, 1, NULL, 19, '2023-06-30 23:37:38', '2023-07-02 21:05:26', 5),
+(16, 'Transaction2', 'Transaction ma money yo 2', 'https://i.imgur.com/T7V2GLk.jpg', 1, 0, 0, 2, 1, NULL, 20, '2023-06-30 23:37:51', '2023-07-02 21:05:28', 5),
+(17, 'Who', 'whoo', 'https://i.imgur.com/IYHdWPz.jpg', 1, 0, 0, 1, 1, NULL, 23, '2023-07-02 18:09:13', '2023-07-02 21:14:42', 1),
+(18, 'LanguageShesh', 'LanguageShesh LanguageShesh LanguageShesh LanguageShesh', 'https://i.imgur.com/liNIrRW.jpg', 3, 0, 0, 1, 1, NULL, 26, '2023-07-02 21:45:24', '2023-07-02 21:45:24', 5);
 
 --
 -- Dumping data for table `categories`
@@ -94,7 +99,6 @@ INSERT INTO `categories` (`category_id`, `name`, `add_by_admin_id`, `created_at`
 (2, 'Non-Fiction', 1, '2023-06-25 20:20:27', '2023-06-25 20:20:27'),
 (3, 'Science Fiction', 2, '2023-06-25 20:20:27', '2023-06-25 20:20:27'),
 (4, 'Fantasy', 1, '2023-06-26 00:30:51', '2023-06-26 00:30:51'),
-(5, 'Science Fiction', 1, '2023-06-26 00:30:51', '2023-06-26 00:30:51'),
 (6, 'Dystopian', 1, '2023-06-26 00:30:51', '2023-06-26 00:30:51'),
 (7, 'Romance', 1, '2023-06-26 00:30:51', '2023-06-26 00:30:51'),
 (8, 'Mystery', 1, '2023-06-26 00:30:51', '2023-06-26 00:30:51'),
@@ -105,12 +109,25 @@ INSERT INTO `categories` (`category_id`, `name`, `add_by_admin_id`, `created_at`
 (13, 'Computer', 1, '2023-06-26 22:30:34', '2023-06-26 22:30:34');
 
 --
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` (`language_id`, `language`, `admin_id`, `created_at`, `updated_at`) VALUES
+(1, 'English', 1, '2023-07-02 21:08:41', '2023-07-02 21:08:41'),
+(2, 'French', 1, '2023-07-02 21:35:07', '2023-07-02 21:35:07'),
+(3, 'Korean', 1, '2023-07-02 21:36:56', '2023-07-02 21:36:56');
+
+--
 -- Dumping data for table `publication`
 --
 
 INSERT INTO `publication` (`publication_id`, `publish_year`, `series_title`, `volume`, `edition`, `number_of_volumes`, `number_of_pages`, `created_at`, `updated_at`, `publisher_id`) VALUES
+(7, 2002, NULL, NULL, NULL, NULL, NULL, '2023-06-28 06:09:01', '2023-06-28 06:09:01', 1),
 (18, 2002, 'Who', 1, 1, 1, 127, '2023-06-29 18:44:26', '2023-06-29 18:44:26', 2),
-(7, 2002, NULL, NULL, NULL, NULL, NULL, '2023-06-28 06:09:01', '2023-06-28 06:09:01', 1);
+(19, 2006, 'Transaction ma money', 1, 1, NULL, 127, '2023-06-30 23:37:38', '2023-06-30 23:37:38', 2),
+(20, 2006, 'Transaction ma money', 1, 1, NULL, 127, '2023-06-30 23:37:51', '2023-06-30 23:37:51', 2),
+(23, 2002, '1111', 127, 127, 111, 127, '2023-07-02 18:09:13', '2023-07-02 18:09:13', 2),
+(26, 1090, 'LanguageShesh', 1, 1, 1, 127, '2023-07-02 21:45:24', '2023-07-02 21:45:24', 1);
 
 --
 -- Dumping data for table `publisher`
@@ -125,12 +142,12 @@ INSERT INTO `publisher` (`publisher_id`, `name`, `city`, `admin_id`, `created_at
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `profile_url`, `balance`, `title`, `gender`, `email`, `contact_number`, `created_at`, `updated_at`, `debt`) VALUES
-(1, 'user1', 'password1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 870, 'sohphomore', 'Male', 'user1@example.com', '0123456', '2023-06-25 20:20:27', '2023-06-29 22:57:45', 0),
+(1, 'user1', 'password1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 1369, 'sohphomore', 'Male', 'user1@example.com', '0123456', '2023-06-25 20:20:27', '2023-07-02 18:06:47', 0),
 (2, 'user2', 'password2', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 180, NULL, NULL, 'user2@example.com', NULL, '2023-06-25 20:20:27', '2023-06-29 22:27:37', 91),
 (3, 'user3', 'password3', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, NULL, 'user3@example.com', NULL, '2023-06-25 20:20:27', '2023-06-29 21:15:01', 0),
 (4, 'test1', 'test1', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Other', 'test1@gmail.com', NULL, '2023-06-25 23:51:36', '2023-06-25 23:51:36', 0),
-(12, 'test', '123', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Female', 'test@gmail.com', NULL, '2023-06-26 00:09:08', '2023-06-26 00:09:08', 0),
-(9, 'test2', 'test', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Male', 'test2@gmail.com', NULL, '2023-06-26 00:01:37', '2023-06-26 00:01:37', 0);
+(9, 'test2', 'test', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Male', 'test2@gmail.com', NULL, '2023-06-26 00:01:37', '2023-06-26 00:01:37', 0),
+(12, 'test', '123', 'https://pbs.twimg.com/profile_images/557797323569250304/zpGjrYwi_400x400.png', 0, NULL, 'Female', 'test@gmail.com', NULL, '2023-06-26 00:09:08', '2023-06-26 00:09:08', 0);
 
 --
 -- Dumping data for table `user_borrow_history`
@@ -159,7 +176,8 @@ INSERT INTO `user_borrow_history` (`user_borrow_history_id`, `user_id`, `book_id
 (20, 3, 3, '2023-06-29 22:05:34', '2023-06-29 22:07:28', '2023-07-06 22:05:34', 0, '2023-06-29 22:07:28', '2023-06-29 22:07:28', 0),
 (21, 1, 1, '2023-06-29 21:40:07', '2023-06-29 22:07:53', '2023-07-06 21:40:07', 0, '2023-06-29 22:07:53', '2023-06-29 22:07:53', 0),
 (22, 2, 2, '2023-05-25 20:20:27', '2023-06-29 22:08:26', '2023-05-26 20:20:27', 35, '2023-06-29 22:08:26', '2023-06-29 22:08:26', 34),
-(23, 1, 2, '2023-06-29 22:47:17', '2023-06-29 23:00:23', '2023-07-06 22:47:17', 0, '2023-06-29 23:00:23', '2023-06-29 23:00:23', 0);
+(23, 1, 2, '2023-06-29 22:47:17', '2023-06-29 23:00:23', '2023-07-06 22:47:17', 0, '2023-06-29 23:00:23', '2023-06-29 23:00:23', 0),
+(24, 1, 1, '2023-06-29 22:41:07', '2023-07-02 18:04:58', '2023-07-01 22:41:07', 3, '2023-07-02 18:04:58', '2023-07-02 18:04:58', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

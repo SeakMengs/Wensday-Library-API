@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllCategory, userLogin, getAllBook, getAllBookById, getOneUserById, getAllActiveBorrow, adminLogin, userSignup, createCategory, createAuthor, getOneAdminById, updateBalance, getAllAuthor, createPublisher, getAllPublisher, addBook, updateReturnBook, borrowBook } from "../controllers/queryController.js";
+import { getAllCategory, userLogin, getAllBook, getAllBookById, getOneUserById, getAllActiveBorrow, adminLogin, userSignup, createCategory, createAuthor, getOneAdminById, updateBalance, getAllAuthor, createPublisher, getAllPublisher, addBook, updateReturnBook, borrowBook, getAllLanguage, createLanguage } from "../controllers/queryController.js";
 
 const router = express.Router();
 
@@ -12,6 +12,7 @@ router.get('/book/:id', getAllBookById);
 router.get('/user/:id', getOneUserById);
 router.get('/admin/:id', getOneAdminById);
 router.get('/activeBorrows', getAllActiveBorrow);
+router.get('/language/all', getAllLanguage);
 //*-------------------------End of Get Routes-------------------------
 
 
@@ -26,7 +27,7 @@ router.post('/updateBalance', updateBalance);
 router.post('/addBook', addBook);
 router.post('/updateActiveBorrow/:active_borrow_id', updateReturnBook);
 router.post('/borrowBook/:book_id', borrowBook);
+router.post('/createLanguage', createLanguage);
 //*-------------------------End of Post Routes-------------------------
-
 
 export default router;

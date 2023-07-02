@@ -4,7 +4,7 @@
  * https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/
  */
 
-import { ActiveBorrow, Admins, Author, BalanceHistories, Books, Categories, Publication, Publisher, UserBorrowHistory, Users } from "../models/Relationship.js";
+import { ActiveBorrow, Admins, Author, BalanceHistories, Books, Categories, Languages, Publication, Publisher, UserBorrowHistory, Users } from "../models/Relationship.js";
 import { Sequelize } from "sequelize";
 import sequelize from "../services/sequelize.js";
 
@@ -42,6 +42,10 @@ export const getAllBook = async (req, res) => {
                 {
                     model: Categories,
                     as: 'category',
+                },
+                {
+                    model: Languages,
+                    as: 'language',
                 },
                 {
                     model: Admins,
@@ -90,6 +94,10 @@ export const getAllBookById = async (req, res) => {
                 {
                     model: Categories,
                     as: 'category',
+                },
+                {
+                    model: Languages,
+                    as: 'language',
                 },
                 {
                     model: Admins,
@@ -546,7 +554,7 @@ export const addBook = async (req, res) => {
             title: book.title,
             description: book.description,
             cover_image: book.cover_image,
-            language: book.language,
+            language_id: book.language_id,
             has_active_borrow_requests: false,
             user_borrow_count: 0,
             category_id: book.category_id,
@@ -627,6 +635,50 @@ export const borrowBook = async (req, res) => {
                 active_borrow: active_borrow
             })
         }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getAllLanguage = async (req, res) => {
+    try {
+        const languages = await Languages.findAll();
+
+        if (languages) {
+            res.status(200).json({
+                languages: languages
+            })
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const createLanguage = async (req, res) => {
+    try {
+        // managed transaction
+        const language = await sequelize.transaction(async (t) => {
+            const { language, admin_id } = req.body
+
+            const existLanguage = await Languages.findOne({
+                where: { language: language }
+            })
+
+            if (existLanguage) {
+                res.status(401).json({ message: "Language already exist" })
+                return
+            }
+
+            const saveLanguage = await Languages.create({
+                language: language,
+                admin_id: admin_id
+            }, { transaction: t });
+
+            res.status(200).json({
+                message: "Create Language Success",
+                language: language
+            })
+        })
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
