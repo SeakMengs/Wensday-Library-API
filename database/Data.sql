@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 02, 2023 at 10:28 PM
+-- Generation Time: Jul 09, 2023 at 09:17 AM
 -- Server version: 8.0.31
 -- PHP Version: 7.4.33
 
@@ -78,11 +78,11 @@ INSERT INTO `balance_histories` (`balance_history_id`, `user_id`, `paid_to_admin
 --
 
 INSERT INTO `books` (`book_id`, `title`, `description`, `cover_image`, `language_id`, `has_active_borrow_requests`, `user_borrow_count`, `category_id`, `add_by_admin_id`, `active_borrow_id`, `publication_id`, `created_at`, `updated_at`, `author_id`) VALUES
-(1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 1, 0, 0, 2, 2, 1, 1, '2023-06-25 20:20:27', '2023-07-02 21:05:18', 1),
-(2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 1, 0, 0, 2, 2, 2, 2, '2023-06-25 20:20:27', '2023-07-02 21:05:19', 2),
-(3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 1, 0, 3, 3, 3, 3, '2023-06-25 20:20:27', '2023-07-02 21:05:20', 1),
-(4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 3, '2023-06-26 00:41:55', '2023-07-02 21:05:22', 1),
-(5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 3, '2023-06-26 00:42:02', '2023-07-02 21:05:23', 1),
+(1, 'Book 1', 'Description of Book 1', 'https://i.imgur.com/NXpbs1N.jpg', 1, 0, 0, 2, 2, 1, 7, '2023-06-25 20:20:27', '2023-07-09 08:53:55', 1),
+(2, 'Book 2', 'Description of Book 2', 'https://i.imgur.com/n3J4wnm.png', 1, 0, 0, 2, 2, 2, 7, '2023-06-25 20:20:27', '2023-07-09 08:53:55', 2),
+(3, 'Book 3', 'Description of Book 3', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 1, 0, 3, 3, 3, 7, '2023-06-25 20:20:27', '2023-07-09 08:53:55', 1),
+(4, 'Book 55', 'Description of Book 4', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 7, '2023-06-26 00:41:55', '2023-07-09 08:53:55', 1),
+(5, 'Book 5', 'Description of Book 5', 'https://i.imgur.com/Z5ZhMop.jpg', 1, 0, 0, 3, 3, 3, 7, '2023-06-26 00:42:02', '2023-07-09 08:53:51', 1),
 (8, 'How to hack', 'hack 101', 'https://i.imgur.com/tPSBfvy.jpg', 2, 1, 0, 1, 1, NULL, 7, '2023-06-28 06:09:01', '2023-07-02 21:38:22', 1),
 (14, 'Title Who', 'Who', 'https://i.imgur.com/vRkartA.jpg', 1, 0, 0, 4, 1, NULL, 18, '2023-06-29 18:44:26', '2023-07-02 21:05:25', 5),
 (15, 'Transaction ', 'Transaction ma money yo', 'https://i.imgur.com/T7V2GLk.jpg', 1, 0, 0, 2, 1, NULL, 19, '2023-06-30 23:37:38', '2023-07-02 21:05:26', 5),
@@ -178,6 +178,16 @@ INSERT INTO `user_borrow_history` (`user_borrow_history_id`, `user_id`, `book_id
 (22, 2, 2, '2023-05-25 20:20:27', '2023-06-29 22:08:26', '2023-05-26 20:20:27', 35, '2023-06-29 22:08:26', '2023-06-29 22:08:26', 34),
 (23, 1, 2, '2023-06-29 22:47:17', '2023-06-29 23:00:23', '2023-07-06 22:47:17', 0, '2023-06-29 23:00:23', '2023-06-29 23:00:23', 0),
 (24, 1, 1, '2023-06-29 22:41:07', '2023-07-02 18:04:58', '2023-07-01 22:41:07', 3, '2023-07-02 18:04:58', '2023-07-02 18:04:58', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `book_detail`
+--
+DROP TABLE IF EXISTS `book_detail`;
+
+DROP VIEW IF EXISTS `book_detail`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `book_detail`  AS SELECT `books`.`book_id` AS `book_id`, `books`.`title` AS `title`, `books`.`description` AS `description`, `books`.`cover_image` AS `cover_image`, `books`.`language_id` AS `language_id`, `books`.`has_active_borrow_requests` AS `has_active_borrow_requests`, `books`.`user_borrow_count` AS `user_borrow_count`, `books`.`category_id` AS `category_id`, `books`.`add_by_admin_id` AS `add_by_admin_id`, `books`.`active_borrow_id` AS `active_borrow_id`, `books`.`publication_id` AS `publication_id`, `books`.`created_at` AS `created_at`, `books`.`updated_at` AS `updated_at`, `books`.`author_id` AS `author_id`, `categories`.`name` AS `category_name`, `languages`.`language` AS `language`, `publisher`.`name` AS `publisher_name`, `publication`.`publish_year` AS `publish_year`, `authors`.`name` AS `author_name` FROM (((((`books` join `categories` on((`books`.`category_id` = `categories`.`category_id`))) join `languages` on((`books`.`language_id` = `languages`.`language_id`))) join `publication` on((`books`.`publication_id` = `publication`.`publication_id`))) join `publisher` on((`publication`.`publisher_id` = `publisher`.`publisher_id`))) join `authors` on((`authors`.`author_id` = `books`.`author_id`)))  ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

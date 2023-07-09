@@ -8,6 +8,7 @@ import Publication from './Publication.js';
 import Publisher from './Publisher.js';
 import UserBorrowHistory from './UserBorrowHistory.js';
 import Users from './Users.js';
+import BookDetail from './BookDetail.js';
 import Languages from './Languages.js';
 
 
@@ -122,4 +123,4 @@ Books.belongsTo(Languages, {
 
 //* End of Relationship
 
-export { ActiveBorrow, Admins, Author, BalanceHistories, Books, Categories, Publication, Publisher, UserBorrowHistory, Users, Languages };
+export { ActiveBorrow, Admins, Author, BalanceHistories, Books, Categories, Publication, Publisher, UserBorrowHistory, Users, Languages, BookDetail };

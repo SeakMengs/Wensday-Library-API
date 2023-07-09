@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 03/07/2023 05:26:58
+ Date: 09/07/2023 16:15:15
 */
 
 SET NAMES utf8mb4;
@@ -201,6 +201,12 @@ CREATE TABLE `users`  (
   `debt` bigint NULL DEFAULT 0,
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- View structure for book_detail
+-- ----------------------------
+DROP VIEW IF EXISTS `book_detail`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `book_detail` AS select `books`.`book_id` AS `book_id`,`books`.`title` AS `title`,`books`.`description` AS `description`,`books`.`cover_image` AS `cover_image`,`books`.`language_id` AS `language_id`,`books`.`has_active_borrow_requests` AS `has_active_borrow_requests`,`books`.`user_borrow_count` AS `user_borrow_count`,`books`.`category_id` AS `category_id`,`books`.`add_by_admin_id` AS `add_by_admin_id`,`books`.`active_borrow_id` AS `active_borrow_id`,`books`.`publication_id` AS `publication_id`,`books`.`created_at` AS `created_at`,`books`.`updated_at` AS `updated_at`,`books`.`author_id` AS `author_id`,`categories`.`name` AS `category_name`,`languages`.`language` AS `language`,`publisher`.`name` AS `publisher_name`,`publication`.`publish_year` AS `publish_year`,`authors`.`name` AS `author_name` from (((((`books` join `categories` on((`books`.`category_id` = `categories`.`category_id`))) join `languages` on((`books`.`language_id` = `languages`.`language_id`))) join `publication` on((`books`.`publication_id` = `publication`.`publication_id`))) join `publisher` on((`publication`.`publisher_id` = `publisher`.`publisher_id`))) join `authors` on((`authors`.`author_id` = `books`.`author_id`)));
 
 -- ----------------------------
 -- Procedure structure for insert_user_borrow_history

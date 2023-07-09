@@ -4,7 +4,7 @@
  * https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/
  */
 
-import { ActiveBorrow, Admins, Author, BalanceHistories, Books, Categories, Languages, Publication, Publisher, UserBorrowHistory, Users } from "../models/Relationship.js";
+import { ActiveBorrow, Admins, Author, BalanceHistories, BookDetail, Books, Categories, Languages, Publication, Publisher, UserBorrowHistory, Users } from "../models/Relationship.js";
 import { Sequelize } from "sequelize";
 import sequelize from "../services/sequelize.js";
 
@@ -273,6 +273,7 @@ export const adminLogin = async (req, res) => {
 }
 
 export const userSignup = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         if (!req.body.username) {
             res.status(401).json({ message: "Username cannot be empty" })
@@ -307,6 +308,8 @@ export const userSignup = async (req, res) => {
 
         const user = Users.create(req.body)
 
+        await t.commit();
+
         if (user) {
             res.status(200).json({
                 message: "Signup Success",
@@ -315,11 +318,13 @@ export const userSignup = async (req, res) => {
         }
 
     } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
 
 export const createCategory = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const existCategory = await Categories.findOne({
             where: { name: req.body.category_name }
@@ -335,6 +340,8 @@ export const createCategory = async (req, res) => {
             add_by_admin_id: req.body.add_by_admin_id
         })
 
+        await t.commit();
+
         if (category) {
             res.status(200).json({
                 message: "Create Category Success",
@@ -343,11 +350,13 @@ export const createCategory = async (req, res) => {
         }
 
     } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
 
 export const createAuthor = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const existAuthor = await Author.findOne({
             where: { name: req.body.author_name }
@@ -363,6 +372,8 @@ export const createAuthor = async (req, res) => {
             admin_id: req.body.admin_id
         })
 
+        await t.commit();
+
         if (author) {
             res.status(200).json({
                 message: "Create Author Success",
@@ -371,11 +382,13 @@ export const createAuthor = async (req, res) => {
         }
 
     } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
 
 export const createPublisher = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const existPublisher = await Publisher.findOne({
             where: { name: req.body.name }
@@ -392,6 +405,8 @@ export const createPublisher = async (req, res) => {
             address: req.body.city,
         })
 
+        await t.commit();
+
         if (publisher) {
             res.status(200).json({
                 message: "Create Publisher Success",
@@ -400,6 +415,7 @@ export const createPublisher = async (req, res) => {
         }
 
     } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
@@ -432,6 +448,7 @@ export const getAllActiveBorrow = async (req, res) => {
 }
 
 export const updateBalance = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const { user_id, amount, admin_id } = req.body
 
@@ -463,7 +480,7 @@ export const updateBalance = async (req, res) => {
                 where: { user_id: user_id }
             }
         )
-        // when console.log user, it will return [1] if success
+        // when console.log user, it will return 1 if success
         if (user[0] === 1) {
             // store history
             const history = await BalanceHistories.create({
@@ -471,6 +488,8 @@ export const updateBalance = async (req, res) => {
                 paid_amount: amount,
                 paid_to_admin_id: admin_id
             })
+
+            await t.commit();
 
             if (history) {
                 res.status(200).json({
@@ -483,14 +502,7 @@ export const updateBalance = async (req, res) => {
 
         res.status(401).json({ message: "Update Balance Failed" })
     } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
-export const returnBook = async (req, res) => {
-    try {
-
-    } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
@@ -587,6 +599,7 @@ export const addBook = async (req, res) => {
 }
 
 export const updateReturnBook = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const { active_borrow_id } = req.params;
 
@@ -595,16 +608,21 @@ export const updateReturnBook = async (req, res) => {
             replacements: { activeBorrowId: active_borrow_id }
         })
 
+        await t.commit();
+
         res.status(200).json({
             message: "Return Book Success",
             returnBook: returnBook
         })
     } catch (error) {
+        await t.rollback();
+
         res.status(500).json({ message: error.message });
     }
 }
 
 export const borrowBook = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const { book_id, user_id } = req.body
 
@@ -624,9 +642,14 @@ export const borrowBook = async (req, res) => {
             date_to_be_return: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
         })
 
+        await t.commit();
+
         if (active_borrow) {
             const updateBookAvailablity = await Books.update(
-                { has_active_borrow_requests: true },
+                { 
+                    has_active_borrow_requests: true,
+                    user_borrow_count: sequelize.literal('user_borrow_count + 1')
+                },
                 { where: { book_id: book_id } }
             );
 
@@ -636,6 +659,7 @@ export const borrowBook = async (req, res) => {
             })
         }
     } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
@@ -679,6 +703,26 @@ export const createLanguage = async (req, res) => {
                 language: language
             })
         })
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getBookDetailById = async (req, res) => {
+    try {
+        const { id: book_id } = req.params;
+
+        const book_detail = await BookDetail.findOne(
+            {
+                where: { book_id: book_id },
+            }
+        )
+
+        if (book_detail) {
+            res.status(200).json({
+                book: book_detail
+            })
+        }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

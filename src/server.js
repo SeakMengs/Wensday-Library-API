@@ -11,7 +11,13 @@ dotenv.config()
 const app = express();
 const port = process.env.SERVER_PORT || 8080;
 
-app.use(cors())
+const corsOptions = {
+    origin: "*",
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions))
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded

@@ -63,3 +63,13 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+-- ------------------------------ VIEW ------------------------------
+CREATE VIEW book_detail AS
+SELECT books.*, categories.name AS category_name, languages.language, publisher.name AS publisher_name, publication.publish_year, authors.name as author_name
+FROM books
+JOIN categories ON books.category_id = categories.category_id
+JOIN languages ON books.language_id = languages.language_id
+JOIN publication ON books.publication_id = publication.publication_id
+JOIN publisher ON publication.publisher_id = publisher.publisher_id
+JOIN authors ON authors.author_id = books.author_id
